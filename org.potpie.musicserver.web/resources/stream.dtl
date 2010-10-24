@@ -1,0 +1,14 @@
+{% extends mobile %}
+{% block jsInitialization %}
+   <script type="text/javascript" src="{{contextRoot}}/_javascript?modules=org.potpie.musicserver.web.Streamer&namespaces=org.potpie.musicserver.web:../"></script>
+   <script>
+	dojo.addOnLoad( function() {
+		new org.potpie.musicserver.web.Streamer();
+	});
+   </script>
+{% endblock %}
+{% block extra %}
+<div id="streamerContainer"></div>
+{% endblock %}
+{% block volumeControls %}
+{% endblock %}

@@ -1,0 +1,18 @@
+[
+	{
+		"urlPattern": "^/web",
+		"callback": "org.potpie.musicserver.web.handlers.WebContext",
+		"callbackHandlerId": "org.potpie.musicserver.callback.MusicServerCallbackHandlerFactory"
+	},
+	{
+		"urlPattern": "^/rc",
+		"callback": "org.potpie.musicserver.web.handlers.RemoteContext",
+		"callbackHandlerId": "org.potpie.musicserver.callback.MusicServerCallbackHandlerFactory"
+	},
+	{
+		"urlPattern": "^/stream",
+		"callback": "org.potpie.musicserver.web.handlers.StreamContext",
+		"callbackHandlerId": "org.potpie.musicserver.callback.MusicServerCallbackHandlerFactory"
+	}
+	
+]

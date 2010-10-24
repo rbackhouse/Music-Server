@@ -1,0 +1,65 @@
+<project name="build" basedir="." default="assemble">
+	<property
+		name="target.dir"
+		value="${basedir}/bin"/>
+	
+	<property
+		name="workspace.dir"
+		value="${basedir}/.."/>
+	
+	<property
+		name="targetplatform.dir"
+		value="${workspace.dir}/../targetplatform/zazl/eclipse/plugins"/>
+	
+	<property
+		name="soundapi.dir"
+		value="${workspace.dir}/../targetplatform/soundapi/eclipse/plugins"/>
+	
+	<property
+		name="export.dir"
+		value="${target.dir}/plugins"/>
+	
+	<target name="assemble">
+		<war destfile="${target.dir}/musicserver.war" webxml="${basedir}/WebContent/WEB-INF/web.xml">
+			<zipfileset dir="${workspace.dir}/org.potpie.musicserver.web/resources/images" prefix="images"/>
+			<zipfileset dir="${workspace.dir}/org.potpie.musicserver.web/resources/template" prefix="template"/>
+			<fileset dir="${workspace.dir}/org.potpie.musicserver.web/resources" 
+				        includes="**/*.js,**/*.dtl"/>
+			<fileset dir="${workspace.dir}/org.potpie.musicserver.web/resources/handlers" 
+						includes="**/*.js"/>
+			<fileset dir="${workspace.dir}/org.potpie.musicserver.web/resources">
+				<include name="*.json"/>
+			</fileset>
+			<lib dir="${soundapi.dir}/javazoom.jl_1.0.1">
+				<include name="jl1.0.1.jar"/>
+			</lib>
+			<lib dir="${soundapi.dir}/javazoom.jlgui.basicplayer_1.0.0">
+				<include name="basicplayer3.0.jar"/>
+			</lib>
+			<lib dir="${soundapi.dir}/javazoom.spi_1.0.0">
+				<include name="mp3spi1.9.4.jar"/>
+			</lib>
+			<lib dir="${soundapi.dir}/org.kc7bfi.jflac_1.0.0">
+				<include name="jflac-1.3.jar"/>
+			</lib>
+			<lib dir="${soundapi.dir}/org.tritonus.share_1.0.0">
+				<include name="tritonus_share.jar"/>
+			</lib>
+			<lib dir="${targetplatform.dir}">
+				<include name="*.jar"/>
+				<exclude name="org.mozilla.rhino_1.7.1.jar"/>
+				<exclude name="org.apache.james.mime4j_0.4.0.v20090903.jar"/>
+				<exclude name="org.dojotoolkit.zazl.tests_*.jar"/>
+				<exclude name="org.dojotoolkit.zazl.jetty_*.jar"/>
+				<exclude name="org.dojotoolkit.zazl.servlet.osgi_*.jar"/>
+				<exclude name="org.dojotoolkit.zazl.samples_*.jar"/>
+				<exclude name="org.dojotoolkit.zazl.commonjs_*.jar"/>
+			</lib>
+			<lib dir="${export.dir}">
+				<include name="org.potpie.musicserver.service_1.0.0.jar"/>
+			</lib>
+			<zipfileset src="${targetplatform.dir}/org.mozilla.rhino_1.7.1.jar" includes="lib/*.jar" prefix="WEB-INF"/>
+			<zipfileset src="${targetplatform.dir}/org.apache.james.mime4j_0.4.0.v20090903.jar" includes="lib/*.jar" prefix="WEB-INF"/>
+		</war>
+	</target>
+</project>

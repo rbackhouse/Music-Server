@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Music Server Utilities
+Bundle-SymbolicName: org.potpie.musicserver.util
+Bundle-Version: 1.0.0
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.kc7bfi.jflac,
+ org.kc7bfi.jflac.apps,
+ org.kc7bfi.jflac.frame,
+ org.kc7bfi.jflac.io,
+ org.kc7bfi.jflac.metadata,
+ org.kc7bfi.jflac.sound.spi,
+ org.kc7bfi.jflac.util
+Main-Class: org.potpie.musicserver.util.WARModifier

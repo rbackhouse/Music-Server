@@ -1,0 +1,25 @@
+<project name="export" basedir="." default="export">
+    <!-- Properties -->
+	<property
+		name="plugins"
+		value="org.potpie.musicserver.service"/>
+	
+	<property
+		name="export.dir"
+		value="./bin"/>
+	
+	<target name="export">
+		<antcall target="clean"/>
+		<echo level="warning" message="Wait for background PDE Export to finish..."/>
+		<pde.exportPlugins
+			plugins="${plugins}"
+			destination="${export.dir}"
+			exportType="directory" 
+			useJARFormat="true"
+			exportSource="false"/>
+	</target>
+	
+	<target name="clean">
+		<delete	dir="${export.dir}"/>
+	</target>
+</project>

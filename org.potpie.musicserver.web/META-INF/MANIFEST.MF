@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Music Server Web UI
+Bundle-SymbolicName: org.potpie.musicserver.web;singleton:=true
+Bundle-Version: 1.0.0
+Require-Bundle: org.dojotoolkit.zazl.servlet.osgi

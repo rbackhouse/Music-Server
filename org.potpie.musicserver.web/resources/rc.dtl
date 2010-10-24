@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    
+    <head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+        <style>
+            @import "{{contextRoot}}/dojox/mobile/themes/iphone/iphone.css";
+        </style>
+        <link rel="stylesheet" href="{{contextRoot}}/template/rc.css"/>
+		<script type="text/javascript">
+			djConfig = {isDebug: false, parseOnLoad: true, usePlainJson: true, baseUrl: "{{ dojoUrl }}"};
+			_contextRoot = "{{contextRoot}}";
+			_currentVolume = "{{currentVolume}}";
+		</script>
+		{% block jsInitialization %}
+	    <script type="text/javascript" src="{{contextRoot}}/_javascript?modules=org.potpie.musicserver.web.RemoteController&namespaces=org.potpie.musicserver.web:../"></script>
+	    <script>
+			dojo.addOnLoad( function() {
+				new org.potpie.musicserver.web.RemoteController({{currentState}});
+			});
+	    </script>
+		{% endblock %}
+    </head>
+    <body>
+		<div dojoType="dojox.mobile.View" id="artists" selected="true">
+			<div dojoType="dojox.mobile.Heading" label="Artists">
+			</div>
+			<div dojoType="dojox.mobile.RoundRect">
+				<button id="gotoAlbums" dojoType="dojox.mobile.Button" style="width:80px">Albums</button>
+				<button id="gotoSongs" dojoType="dojox.mobile.Button" style="width:75px">Songs</button>
+				<button id="gotoPlayList" dojoType="dojox.mobile.Button" style="width:100px">Play List</button>
+			</div>	
+			<div dojoType="dojox.mobile.TabContainer" id="artistTabContainer">
+				{% for tab in tabs %}
+					<div dojoType="dojox.mobile.TabPane" label="{{tab.label}}" id="artistTab{{forloop.counter}}">
+						<ul dojoType="dojox.mobile.RoundRectList" id="artistList{{forloop.counter}}" startIndex={{tab.startIndex}} endIndex={{tab.endIndex}}>
+							{% for artist in tab.artistList %}
+								<li id="artistItem{{artist.id}}" class="mblVariableHeight" dojoType="dojox.mobile.ListItem" moveTo="albums">{{artist.label}}</li>
+							{% endfor %}
+						</ul>
+					</div>	
+				{% endfor %}
+			</div>
+		</div>		
+		<div dojoType="dojox.mobile.View" id="albums">
+			<div dojoType="dojox.mobile.Heading" label="Albums" back="Artists" moveTo="artists">
+			</div>
+			<div dojoType="dojox.mobile.RoundRect">
+				<button id="randomForArtistButton" dojoType="dojox.mobile.Button" style="width:100px">Mix</button>
+				<button id="gotoPlayList1" dojoType="dojox.mobile.Button" style="width:100px">Play List</button>
+			</div>	
+			<ul dojoType="dojox.mobile.RoundRectList" id="albumList">
+			</ul>
+		</div>		
+		<div dojoType="dojox.mobile.View" id="songs">
+			<div dojoType="dojox.mobile.Heading" label="Songs" back="Albums" moveTo="albums">
+			</div>
+			<div dojoType="dojox.mobile.RoundRect">
+				<button id="addAllButton" dojoType="dojox.mobile.Button" style="width:100px">Add All</button>
+				<button id="gotoPlayList2" dojoType="dojox.mobile.Button" style="width:100px">Play List</button>
+			</div>	
+			<ul dojoType="dojox.mobile.RoundRectList" id="songList">
+			</ul>
+		</div>		
+		<div dojoType="dojox.mobile.View" id="playing">
+			<div dojoType="dojox.mobile.Heading" label="Now Playing" back="Songs" moveTo="songs">
+			</div>
+			<div dojoType="dojox.mobile.TabContainer">
+				<div dojoType="dojox.mobile.TabPane" label="Play List">
+					<div dojoType="dojox.mobile.RoundRect">
+						<button id="clearButton" dojoType="dojox.mobile.Button" style="width:100px">Clear</button>
+						<button id="randomButton" dojoType="dojox.mobile.Button" style="width:100px">Random</button>
+					</div>	
+					<ul dojoType="dojox.mobile.RoundRectList" id="playList">
+					</ul>
+				</div>
+				<div id="controls" dojoType="dojox.mobile.TabPane" label="Controls">
+					<div dojoType="dojox.mobile.RoundRect">
+						<button id="previous" dojoType="dojox.mobile.Button" btnClass="rewindIcon"></button>
+						<button id="playPause" dojoType="dojox.mobile.Button" btnClass="playIcon"></button>
+						<button id="stop" dojoType="dojox.mobile.Button" btnClass="stopIcon"></button>
+						<button id="next" dojoType="dojox.mobile.Button" btnClass="fastForwardIcon"></button>
+					</div>
+					{% block volumeControls %}
+					<div dojoType="dojox.mobile.RoundRect">
+						<div id="volume">Volume [{{currentVolume}}]</div>
+						<button id="plus" dojoType="dojox.mobile.Button" btnClass="plusIcon"></button>
+						<button id="minus" dojoType="dojox.mobile.Button" btnClass="minusIcon"></button>
+					</div>
+					{% endblock %}
+					<div dojoType="dojox.mobile.RoundRect">
+						<div id="currentlyPlaying">Currently Playing []</div>
+					</div>
+				</div>
+			</div>	
+		</div>		
+		{% block extra %}{% endblock %}
+    </body>
+</html>

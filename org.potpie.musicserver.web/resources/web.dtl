@@ -1,0 +1,136 @@
+<html>
+    <head>
+        <title>Music Server</title>
+		<link id="themeStyles" rel="stylesheet" href="{{contextRoot}}/dijit/themes/tundra/tundra.css"/>
+        <link id="themeStyles" rel="stylesheet" href="{{contextRoot}}/dojox/grid/resources/Grid.css"/>
+        <link id="themeStyles" rel="stylesheet" href="{{contextRoot}}/dojox/grid/resources/tundraGrid.css"/>
+        <link id="themeStyles" rel="stylesheet" href="{{contextRoot}}/template/web.css"/>
+        <style type="text/css">
+            body, html { font-family:helvetica,arial,sans-serif; font-size:90%; }
+        </style>
+        <style type="text/css">
+            #stackContainer { border: 1px solid #ccc; margin-top: 10px; } #stackContainer
+        </style>
+		<script type="text/javascript">
+			djConfig = {isDebug: false, parseOnLoad: true, usePlainJson: true, baseUrl: "{{ dojoUrl }}"};
+			_contextRoot = "{{contextRoot}}";
+		</script>
+    	<script type="text/javascript" src="{{contextRoot}}/_javascript?modules=org.potpie.musicserver.web.WebController&namespaces=org.potpie.musicserver.web:../"></script>
+		<script type="text/javascript">
+			var artistsStore = new dojo.data.ItemFileReadStore({url: "{{contextRoot}}/service/artist"});
+			var albumsStore = new dojo.data.ItemFileReadStore({url: "{{contextRoot}}/service/album"});
+			var songsStore = new dojo.data.ItemFileWriteStore({data: {identifier: 'title',label: 'title',items: []}});
+			var playListStore = new dojo.data.ItemFileWriteStore({url: "{{contextRoot}}/service/playList"});
+			dojo.addOnLoad( function() {
+				new org.potpie.musicserver.web.WebController(artistsStore, albumsStore, songsStore, playListStore, {{currentState}});
+				var albumGrid = dijit.byId("albums");
+				var artistGrid = dijit.byId("artists");
+				var albumFilter = dijit.byId("albumFilter");
+				dojo.connect(albumFilter, "onChange", function() {
+					albumGrid.filter({album: albumFilter.attr("value")+"*"});
+		        });
+				var artistFilter = dijit.byId("artistFilter");
+				dojo.connect(artistFilter, "onChange", function() {
+					artistGrid.filter({artist: artistFilter.attr("value")+"*"});
+		        });
+			});	
+		</script>        
+    </head>
+    <body class="tundra">
+    	<div id="main">
+    		<div style="width: 100%;">
+		        <button id="previous" onClick="dijit.byId('stackContainer').back()" dojoType="dijit.form.Button">
+		            &lt;
+		        </button>
+		        <span dojoType="dijit.layout.StackController" containerId="stackContainer">
+		        </span>
+		        <button id="next" onClick="dijit.byId('stackContainer').forward()" dojoType="dijit.form.Button">
+		            &gt;
+		        </button>
+		     </div>
+	        <div style="width: 100%;" dojoType="dijit.layout.StackContainer" id="stackContainer">
+	            <div id="artistsContainer" dojoType="dijit.layout.ContentPane" title="Artists">
+	            	<div style="width: 100%; height: 5%;">
+   						<label for="artistFilter">Artists</label>
+    					<input id="artistFilter" dojoType="dijit.form.TextBox" value="" style="width: 10em;" intermediateChanges="true"/>
+    				</div>
+	   	   			<table style="width: 100%; height: 90%;" id="artists" jsId="artists" dojoType="dojox.grid.DataGrid" store="artistsStore" clientSort="false" sortInfo="-1">
+						<thead>
+							<tr>
+								<th field="artist" width="400px" sortDesc="true">Artist</th>
+							</tr>
+						</thead>
+					</table>
+	            </div>
+	            <div id="albumsContainer" dojoType="dijit.layout.ContentPane" title="Albums">
+	            	<div style="width: 100%; height: 5%;">
+    					<label for="albumFilter">Albums</label>
+		    			<input id="albumFilter" dojoType="dijit.form.TextBox" value="" style="width: 10em;" intermediateChanges="true"/>
+						<div id="resetAlbums" dojoType="dijit.form.Button">Reset</div>
+						<div id="randomForArtist" dojoType="dijit.form.Button">Mix</div>
+    				</div>
+	   	   			<table style="width: 100%; height: 90%;" id="albums" jsId="albums" dojoType="dojox.grid.DataGrid" store="albumsStore" clientSort="false" sortInfo="1">
+						<thead>
+							<tr>
+								<th field="album" width="500px">Album</th>
+							</tr>
+						</thead>
+					</table>
+	            </div>
+	            <div id="songsContainer" dojoType="dijit.layout.ContentPane" title="Songs">
+	            	<div style="width: 100%; height: 5%;">
+						<div style="display: inline;" id="addSelectedSongs" dojoType="dijit.form.Button">Add Selected</div>
+						<div style="display: inline;" id="addAllSongs" dojoType="dijit.form.Button">Add All</div>
+    				</div>
+		    	   	<table style="width: 100%; height: 95%;" id="songs" dojoType="dojox.grid.DataGrid" store="songsStore">
+						<thead>
+							<tr>
+								<th field="id" width="50px" hidden="true"></th>
+								<th field="select" width="50px" cellType="dojox.grid.cells.Bool" editable="true">&nbsp;</th>
+								<th field="mp3.id3tag.track" width="50px">Track</th>
+								<th field="type" width="50px">Type</th>
+								<th field="title" width="300px">Title</th>
+							</tr>
+						</thead>
+					</table>
+	            </div>
+	            <div id="playListContainer" dojoType="dijit.layout.ContentPane" title="Play List">
+			    	<div dojoType="dijit.layout.BorderContainer" style="width: 100%; height: 10%;" region="top">
+						<div style="width: 20%;" dojoType="dijit.Toolbar" region="left">
+							<div id="musicserver.rewindButton" dojoType="dijit.form.Button" iconClass="rewindIcon" showLabel="false"></div>
+							<div id="musicserver.stopButton" dojoType="dijit.form.Button" iconClass="stopIcon" showLabel="false"></div>
+							<div id="musicserver.playPauseButton" dojoType="dijit.form.Button" iconClass="playIcon" showLabel="false"></div>
+							<div id="musicserver.fastForwardButton" dojoType="dijit.form.Button" iconClass="fastForwardIcon" showLabel="false"></div>
+						</div>
+						<div dojoType="dijit.layout.ContentPane" region="center">
+							<div id="volume" dojoType="dijit.form.HorizontalSlider" value="{{currentVolume}}" minimum="0" maximum="10" discreteValues="11" intermediateChanges="true" showButtons="true" style="width:150px;"></div>
+						</div>
+						<div dojoType="dijit.layout.ContentPane" style="width: 50%;" region="right">
+							<div style="font-weight: bold; display: inline;" id="currentlyPlaying">Currently Playing [] [0]</div>
+						</div>
+					</div>
+					<div dojoType="dijit.layout.ContentPane" region="center">
+						<div style="display: inline;" id="randomPlaylist" dojoType="dijit.form.Button">Random</div>
+						<div style="display: inline;" id="clearPlaylist" dojoType="dijit.form.Button">Clear</div>
+						<div style="display: inline;" id="removeSelectedSongs" dojoType="dijit.form.Button">Remove Selected</div>
+					</div>
+		    	   	<table id="playList" dojoType="dojox.grid.DataGrid" store="playListStore" style="width: 100%; height: 80%;" region="bottom">
+						<thead>
+							<tr>
+								<th field="id" width="25px" hidden="true"></th>
+								<th field="select" width="50px" cellType="dojox.grid.cells.Bool" editable="true">&nbsp;</th>
+								<th field="title" width="200px">Title</th>
+								<th field="artist" width="200px">Artist</th>
+								<th field="album" width="350px">Album</th>
+								<th field="type" width="50px">Type</th>
+								<th field="offset" width="50px" hidden="true">Offset</th>
+								<th field="length" width="50px" hidden="true">Length</th>
+							</tr>
+						</thead>
+					</table>
+	            </div>
+	        </div>
+	    </div>    
+    </body>
+</html>
+    
