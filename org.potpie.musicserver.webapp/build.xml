@@ -9,11 +9,11 @@
 	
 	<property
 		name="targetplatform.dir"
-		value="${workspace.dir}/../targetplatform/zazl/eclipse/plugins"/>
+		value="${workspace.dir}/../../targetplatform/zazl/eclipse/plugins"/>
 	
 	<property
 		name="soundapi.dir"
-		value="${workspace.dir}/../targetplatform/soundapi/eclipse/plugins"/>
+		value="${workspace.dir}/../../targetplatform/soundapi/eclipse/plugins"/>
 	
 	<property
 		name="export.dir"
