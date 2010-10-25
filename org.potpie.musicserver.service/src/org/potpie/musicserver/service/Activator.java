@@ -41,6 +41,7 @@ public class Activator implements BundleActivator, ServiceTrackerCustomizer  {
         this.context = context;
         httpServiceTracker = new ServiceTracker(context, HttpService.class.getName(), this);
         httpServiceTracker.open();
+        
 	}
 
 	public void stop(BundleContext context) throws Exception {
@@ -52,11 +53,9 @@ public class Activator implements BundleActivator, ServiceTrackerCustomizer  {
 
         if (service instanceof HttpService && httpService == null) {
             httpService = (HttpService)service;
-            MusicServerServlet musicServerServlet = new MusicServerServlet("/Users/rbackhouse/dev/webmediaplayer/test", "/Users/rbackhouse/dev/webmediaplayer/data");
-            //MusicServerServlet musicServerServlet = new MusicServerServlet("/Users/rbackhouse/dev/webmediaplayer/testflac", "/Users/rbackhouse/dev/webmediaplayer/data");
-            //MusicServerServlet musicServerServlet = new MusicServerServlet("/Volumes/mp3/music", "/Users/rbackhouse/dev/webmediaplayer/data");
-            //MusicServerServlet musicServerServlet = new MusicServerServlet("/Volumes/flac/music", "/Users/rbackhouse/dev/webmediaplayer/data");
-            //MusicServerServlet musicServerServlet = new MusicServerServlet(null, null);
+        	String root = System.getProperty("root");
+        	String storageDir = System.getProperty("storageDir");
+            MusicServerServlet musicServerServlet = new MusicServerServlet(root, storageDir);
             try {
 				httpService.registerServlet("/service", musicServerServlet, null, ZazlHttpContext.getSingleton(httpService.createDefaultHttpContext()));
 			} catch (ServletException e) {
