@@ -24,10 +24,10 @@ package org.potpie.musicserver.callback;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import org.dojotoolkit.zazl.servlet.ICallbackHandler;
-import org.dojotoolkit.zazl.servlet.ICallbackHandlerFactory;
+import org.dojotoolkit.zazl.callback.ICallbackHandler;
+import org.dojotoolkit.zazl.servlet.IServletCallbackHandlerFactory;
 
-public class MusicServerCallbackHandlerFactory implements ICallbackHandlerFactory  {
+public class MusicServerCallbackHandlerFactory implements IServletCallbackHandlerFactory  {
 	public ICallbackHandler createCallbackHandler() {
 		return new MusicServerCallbackHandler();
 	}

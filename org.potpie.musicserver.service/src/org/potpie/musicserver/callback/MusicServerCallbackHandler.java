@@ -28,12 +28,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import org.dojotoolkit.zazl.servlet.DefaultCallbackHandler;
+import org.dojotoolkit.zazl.servlet.ServletCallbackHandler;
 import org.dojotoolkit.zazl.util.JSONUtils;
 import org.potpie.musicserver.service.MusicPlayer;
 import org.potpie.musicserver.service.db.MusicDB;
 
-public class MusicServerCallbackHandler extends DefaultCallbackHandler {
+public class MusicServerCallbackHandler extends ServletCallbackHandler {
 	private static final String[] musicServerCallbackNames = { 
     	"getArtists",
     	"getVolume",
