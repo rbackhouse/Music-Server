@@ -13,11 +13,11 @@
 	</context-param>
 	<context-param>
     	<param-name>root</param-name>
-    	<param-value>/Volumes/flac/music</param-value>
+    	<param-value>CHANGE_ME</param-value>
   	</context-param>
   	<context-param>
     	<param-name>storageDir</param-name>
-    	<param-value>/Users/rbackhouse/dev/webmediaplayer/data</param-value>
+    	<param-value>CHANGE_ME</param-value>
   	</context-param>
   	<context-param>
     	<param-name>skipScan</param-name>

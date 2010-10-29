@@ -2,7 +2,7 @@
     <!-- Properties -->
 	<property
 		name="plugins"
-		value="org.potpie.musicserver.service"/>
+		value="org.potpie.musicserver.service,org.potpie.musicserver.util"/>
 	
 	<property
 		name="export.dir"

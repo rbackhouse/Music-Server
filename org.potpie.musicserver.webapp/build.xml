@@ -54,6 +54,7 @@
 				<exclude name="org.dojotoolkit.zazl.servlet.osgi_*.jar"/>
 				<exclude name="org.dojotoolkit.zazl.samples_*.jar"/>
 				<exclude name="org.dojotoolkit.zazl.commonjs_*.jar"/>
+				<exclude name="*.source_*.jar"/>
 			</lib>
 			<lib dir="${export.dir}">
 				<include name="org.potpie.musicserver.service_1.0.0.jar"/>
@@ -61,5 +62,6 @@
 			<zipfileset src="${targetplatform.dir}/org.mozilla.rhino_1.7.1.jar" includes="lib/*.jar" prefix="WEB-INF"/>
 			<zipfileset src="${targetplatform.dir}/org.apache.james.mime4j_0.4.0.v20090903.jar" includes="lib/*.jar" prefix="WEB-INF"/>
 		</war>
+		<copy file="${export.dir}/org.potpie.musicserver.util_1.0.0.jar" tofile="${target.dir}/WARModifier.jar"/>
 	</target>
 </project>
