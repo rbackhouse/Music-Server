@@ -1,6 +1,6 @@
 [
 	{
 		"alias" : "/org/potpie/musicserver/web",
-		"base" : "/"
+		"base" : ""
 	}
 ]	
