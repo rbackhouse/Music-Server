@@ -1,11 +1,11 @@
 Java/JavaScript based Music Server for Home Use
 -----------------------------------------------
 
-The purpose of this project is to provide a Music Server that can be used in a home environment to play music files 
-(mp3 and flac format) and control them via a browser or itouch/iphone based user interface. It also can stream your music files 
-to your itouch/iphone.
+The purpose of this project is to provide a Music Server that can be used in a home environment to play music 
+files (mp3 and flac format) and control them via a browser or itouch/iphone based user interface. It also can 
+stream your music files to your itouch/iphone.
 
-Details of why I ended up writing this software can be found at http://diymusicserver.blogspot.com/
+Details of how this software evolved can be found at http://diymusicserver.blogspot.com/
 
 Quick Start
 -----------
@@ -14,20 +14,23 @@ Prereqs :
 A 1.6 java runtime
 A JEE WebContainer such as Apache Tomcat or Jetty. Preferred versions are Tomcat 6.0 or Jetty 7.1
 
-Download the musicserver.war file from the downloads page (https://github.com/downloads/rbackhouse/Music-Server/musicserver.war)
-Download the WARModifier.jar file from the downloads page (https://github.com/downloads/rbackhouse/Music-Server/WARModifier.jar)
+Download the musicserver.war file from the downloads page 
+(https://github.com/downloads/rbackhouse/Music-Server/musicserver.war)
+Download the WARModifier.jar file from the downloads page 
+(https://github.com/downloads/rbackhouse/Music-Server/WARModifier.jar)
 
 You need to modify the WAR file to set 2 configuration locations.
 
 1) The path to your music collection. It can be a Windows UNC path for an network path. 
 2) The path to a directory that will store the music information database
 
-To set these configuration values use your java runtime to run the WARModifer.jar file. Assuming that both the war and jar file 
-are in the same directory run with this command
+To set these configuration values use your java runtime to run the WARModifer.jar file. Assuming that both 
+the war and jar file are in the same directory run with this command
 
 java -jar WARModifier.jar musicserver.war <pathtomusic> <pathtodb>
 
-Now copy the WAR file to your WebContainer webapps directory (or however the WebContainer expects it to be deployed).
+Now copy the WAR file to your WebContainer webapps directory (or however the WebContainer expects it 
+to be deployed).
 
 Start up the WebContainer and access the User Interface via these urls 
 
@@ -54,4 +57,5 @@ e,g
 Know Issues
 ----------
 
-The Browser Remote Control does not run in Microsoft Internet Explorer. It should work fine with Firefox, Chrome and Safari.
+The Browser Remote Control does not run in Microsoft Internet Explorer. 
+It should work fine with Firefox, Chrome and Safari.
