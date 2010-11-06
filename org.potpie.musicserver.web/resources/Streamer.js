@@ -310,7 +310,6 @@ dojo.declare("org.potpie.musicserver.web.Streamer", null, {
 			
 			var self = this;
 			var streamEnded = function(e) {
-				var rh = new org.potpie.musicserver.web.ResponseHandler(self, "startStreaming", "requestFailed");
 				var dfd = org.potpie.musicserver.web.ServiceHandler.streamNext();
 				dfd.addCallbacks(dojo.hitch(self, "startStreaming"), dojo.hitch(self, "requestFailed"));
 			}
