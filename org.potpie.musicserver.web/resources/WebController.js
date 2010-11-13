@@ -130,7 +130,7 @@ dojo.declare("org.potpie.musicserver.web.WebController", null, {
 	},
 	
 	requestSuccessful: function(response) {
-		if (response.currentlyPlaying != undefined) {
+		if (response !== null && response.currentlyPlaying !== undefined) {
 			var currentlyPlaying = dojo.byId("currentlyPlaying");
 			dojox.xml.parser.removeChildren(currentlyPlaying);
 			currentlyPlaying.appendChild(document.createTextNode("Currently Playing ["+response.currentlyPlaying+"] ["+response.currentPosition+"]"));

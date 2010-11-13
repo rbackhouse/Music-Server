@@ -323,7 +323,7 @@ dojo.declare("org.potpie.musicserver.web.RemoteController", null, {
 	},
 	
 	requestSuccessful: function(response) {
-		if (response.currentlyPlaying != undefined) {
+		if (response !== null && response.currentlyPlaying !== undefined) {
 			var currentlyPlaying = dojo.byId("currentlyPlaying");
 			while (currentlyPlaying.hasChildNodes()) {
 				currentlyPlaying.removeChild(currentlyPlaying.firstChild);

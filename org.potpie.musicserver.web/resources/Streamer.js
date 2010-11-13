@@ -351,7 +351,7 @@ dojo.declare("org.potpie.musicserver.web.Streamer", null, {
 	},
 	
 	requestSuccessful: function(response) {
-		if (response.currentlyPlaying != undefined) {
+		if (response !== null && response.currentlyPlaying !== undefined) {
 			this.currentTrack = response.currentlyPlaying;
 			var currentlyPlaying = dojo.byId("currentlyPlaying");
 			while (currentlyPlaying.hasChildNodes()) {
