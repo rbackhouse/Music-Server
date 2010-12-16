@@ -2,5 +2,9 @@
 	{
 		"alias" : "/org/potpie/musicserver/web",
 		"base" : ""
+	},
+	{
+		"alias" : "/org/dojotoolkit/zazl/optimizer",
+		"base" : ""
 	}
 ]	

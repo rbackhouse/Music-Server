@@ -8,10 +8,6 @@
 	    <param-value>true</param-value>
 	</context-param>
 	<context-param>
-	    <param-name>callbackHandlerFactoryClassNames</param-name>
-	    <param-value>org.potpie.musicserver.callback.MusicServerCallbackHandlerFactory</param-value>
-	</context-param>
-	<context-param>
     	<param-name>root</param-name>
     	<param-value>CHANGE_ME</param-value>
   	</context-param>
@@ -34,15 +30,15 @@
         <description></description>
         <display-name>JSServlet</display-name>
         <servlet-name>JSServlet</servlet-name>
-        <servlet-class>org.dojotoolkit.zazl.servlet.JSServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <servlet-class>org.dojotoolkit.optimizer.servlet.JSServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet>
         <description></description>
         <display-name>MusicServerServlet</display-name>
         <servlet-name>MusicServerServlet</servlet-name>
         <servlet-class>org.potpie.musicserver.service.MusicServerServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <load-on-startup>3</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>MusicServerServlet</servlet-name>

@@ -1,3 +1,4 @@
+{% load org.dojotoolkit.zazl.optimizer.tag.jstag %}
 <!DOCTYPE html>
 <html>
     
@@ -14,7 +15,7 @@
 			_currentVolume = "{{currentVolume}}";
 		</script>
 		{% block jsInitialization %}
-	    <script type="text/javascript" src="{{contextRoot}}/_javascript?modules=org.potpie.musicserver.web.RemoteController&namespaces=org.potpie.musicserver.web:../"></script>
+		{% jslinks org.potpie.musicserver.web.RemoteController org.potpie.musicserver.web:.. %}
 	    <script>
 			dojo.addOnLoad( function() {
 				new org.potpie.musicserver.web.RemoteController({{currentState}});

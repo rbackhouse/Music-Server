@@ -16,6 +16,14 @@
 		value="${workspace.dir}/../../targetplatform/soundapi/eclipse/plugins"/>
 	
 	<property
+		name="httpclient.dir"
+		value="${workspace.dir}/../../targetplatform/http-client/plugins"/>
+	
+	<property
+		name="rhino.dir"
+		value="${workspace.dir}/../../targetplatform/rhino/plugins"/>
+	
+	<property
 		name="export.dir"
 		value="${target.dir}/plugins"/>
 	
@@ -45,10 +53,20 @@
 			<lib dir="${soundapi.dir}/org.tritonus.share_1.0.0">
 				<include name="tritonus_share.jar"/>
 			</lib>
+			<lib dir="${httpclient.dir}/org.apache.httpcomponents.httpclient_4.0.3">
+				<include name="*.jar"/>
+			</lib>
+			<lib dir="${httpclient.dir}/org.apache.httpcomponents.httpcore_4.1">
+				<include name="*.jar"/>
+			</lib>
+			<lib dir="${httpclient.dir}">
+				<include name="*.jar"/>
+			</lib>
+			<lib dir="${rhino.dir}">
+				<include name="*.jar"/>
+			</lib>
 			<lib dir="${targetplatform.dir}">
 				<include name="*.jar"/>
-				<exclude name="org.mozilla.rhino_1.7.1.jar"/>
-				<exclude name="org.apache.james.mime4j_0.4.0.v20090903.jar"/>
 				<exclude name="org.dojotoolkit.zazl.tests_*.jar"/>
 				<exclude name="org.dojotoolkit.zazl.jetty_*.jar"/>
 				<exclude name="org.dojotoolkit.zazl.servlet.osgi_*.jar"/>
@@ -59,8 +77,6 @@
 			<lib dir="${export.dir}">
 				<include name="org.potpie.musicserver.service_1.0.0.jar"/>
 			</lib>
-			<zipfileset src="${targetplatform.dir}/org.mozilla.rhino_1.7.1.jar" includes="lib/*.jar" prefix="WEB-INF"/>
-			<zipfileset src="${targetplatform.dir}/org.apache.james.mime4j_0.4.0.v20090903.jar" includes="lib/*.jar" prefix="WEB-INF"/>
 		</war>
 		<copy file="${export.dir}/org.potpie.musicserver.util_1.0.0.jar" tofile="${target.dir}/WARModifier.jar"/>
 	</target>

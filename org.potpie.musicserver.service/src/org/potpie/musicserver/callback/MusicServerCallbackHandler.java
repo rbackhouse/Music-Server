@@ -25,15 +25,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import org.dojotoolkit.zazl.servlet.ServletCallbackHandler;
+import org.dojotoolkit.zazl.optimizer.OptimizerCallbackHandler;
 import org.dojotoolkit.zazl.util.JSONUtils;
 import org.potpie.musicserver.service.MusicPlayer;
 import org.potpie.musicserver.service.db.MusicDB;
 
-public class MusicServerCallbackHandler extends ServletCallbackHandler {
+public class MusicServerCallbackHandler extends OptimizerCallbackHandler {
 	private static final String[] musicServerCallbackNames = { 
     	"getArtists",
     	"getVolume",
@@ -43,10 +42,10 @@ public class MusicServerCallbackHandler extends ServletCallbackHandler {
 	private MusicDB musicDB = null;
 	private MusicPlayer musicPlayer = null;
 	
-	public MusicServerCallbackHandler(HttpServlet servlet, HttpServletRequest request) {
+	public MusicServerCallbackHandler(HttpServletRequest request) {
 		super(request);
-		musicDB = (MusicDB)servlet.getServletContext().getAttribute("musicDB");
-		musicPlayer = (MusicPlayer)servlet.getServletContext().getAttribute("musicPlayer");
+		musicDB = (MusicDB)request.getAttribute("musicDB");
+		musicPlayer = (MusicPlayer)request.getAttribute("musicPlayer");
 	}
 	
 	public MusicServerCallbackHandler() {

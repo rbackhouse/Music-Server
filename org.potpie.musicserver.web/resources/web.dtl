@@ -1,3 +1,4 @@
+{% load org.dojotoolkit.zazl.optimizer.tag.jstag %}
 <html>
     <head>
         <title>Music Server</title>
@@ -15,7 +16,7 @@
 			djConfig = {isDebug: false, parseOnLoad: true, usePlainJson: true, baseUrl: "{{ dojoUrl }}"};
 			_contextRoot = "{{contextRoot}}";
 		</script>
-    	<script type="text/javascript" src="{{contextRoot}}/_javascript?modules=org.potpie.musicserver.web.WebController&namespaces=org.potpie.musicserver.web:../"></script>
+		{% jslinks org.potpie.musicserver.web.WebController org.potpie.musicserver.web:.. %}
 		<script type="text/javascript">
 			var artistsStore = new dojo.data.ItemFileReadStore({url: "{{contextRoot}}/service/artist"});
 			var albumsStore = new dojo.data.ItemFileReadStore({url: "{{contextRoot}}/service/album"});

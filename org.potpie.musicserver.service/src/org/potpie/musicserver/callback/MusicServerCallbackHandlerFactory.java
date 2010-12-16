@@ -32,7 +32,7 @@ public class MusicServerCallbackHandlerFactory implements IServletCallbackHandle
 		return new MusicServerCallbackHandler();
 	}
 
-	public ICallbackHandler createCallbackHandler(HttpServlet servlet, HttpServletRequest request) {
-		return new MusicServerCallbackHandler(servlet, request);
+	public ICallbackHandler createCallbackHandler(HttpServletRequest request) {
+		return new MusicServerCallbackHandler(request);
 	}
 }
