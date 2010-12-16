@@ -35,6 +35,7 @@ dojo.declare("org.potpie.musicserver.web.Streamer", null, {
 	constructor: function() {
 		var self = this;
 		this.currentState = STATE.STOPPED;
+		this.currentPlayIndex = 1;
 		var artistClicked = function(e) {
 			self.currentArtist = e.target.textContent;
 			var dfd = org.potpie.musicserver.web.ServiceHandler.getAlbumsForArtist(e.target.textContent);
@@ -158,12 +159,15 @@ dojo.declare("org.potpie.musicserver.web.Streamer", null, {
 			var playListItem = new dojox.mobile.ListItem({
 				label: response.items[i].artist + " : " + response.items[i].title
 			});
+			playListItem.domNode.setAttribute("songOffset", ""+response.items[i].offset);
+			playListItem.domNode.setAttribute("songLength", ""+response.items[i].length);
 			dojo.addClass(playListItem.domNode, "mblVariableHeight");
 			playList.addChild(playListItem);
 		}
 	},
 	
 	clearPlayList: function() {
+		this.currentPlayIndex = 0;
 		var dfd = org.potpie.musicserver.web.ServiceHandler.clearStreamPlayList();
 		dfd.addCallbacks(dojo.hitch(this, "requestSuccessful"), dojo.hitch(this, "requestFailed"));
 		var playList = dijit.byId("playList");
@@ -241,9 +245,12 @@ dojo.declare("org.potpie.musicserver.web.Streamer", null, {
 	
 	onRewind: function(e) {
 		dojo.stopEvent(e);
-		var dfd = org.potpie.musicserver.web.ServiceHandler.streamPrevious();
-		dfd.addCallbacks(dojo.hitch(this, "startStreaming"), dojo.hitch(this, "requestFailed"));
-		this.currentState = STATE.PLAYING;
+		if (this.currentPlayIndex > 1) {
+			var dfd = org.potpie.musicserver.web.ServiceHandler.streamPrevious();
+			dfd.addCallbacks(dojo.hitch(this, "requestSuccessful"), dojo.hitch(this, "requestFailed"));
+			this.startStreaming(--this.currentPlayIndex);
+			this.currentState = STATE.PLAYING;
+		}
 		dijit.byId("playPause").domNode.className = "mblButton pauseIcon";
 	},
 	
@@ -254,7 +261,8 @@ dojo.declare("org.potpie.musicserver.web.Streamer", null, {
 		switch (this.currentState) {
 			case STATE.STOPPED: {
 				var dfd = org.potpie.musicserver.web.ServiceHandler.streamPlay();
-				dfd.addCallbacks(dojo.hitch(this, "startStreaming"), dojo.hitch(this, "requestFailed"));
+				dfd.addCallbacks(dojo.hitch(this, "requestSuccessful"), dojo.hitch(this, "requestFailed"));
+				this.startStreaming(this.currentPlayIndex);
 				this.currentState = STATE.PLAYING;
 				buttonClass = "pauseIcon";
 				break;
@@ -291,63 +299,68 @@ dojo.declare("org.potpie.musicserver.web.Streamer", null, {
 	
 	onFastForward: function(e) {
 		dojo.stopEvent(e);
-		var dfd = org.potpie.musicserver.web.ServiceHandler.streamNext();
-		dfd.addCallbacks(dojo.hitch(this, "startStreaming"), dojo.hitch(this, "requestFailed"));
-		this.currentState = STATE.PLAYING;
+		var playList = dijit.byId("playList");
+		if (this.currentPlayIndex < (playList.containerNode.childNodes.length -1)) {
+			var dfd = org.potpie.musicserver.web.ServiceHandler.streamNext();
+			dfd.addCallbacks(dojo.hitch(this, "requestSuccessful"), dojo.hitch(this, "requestFailed"));
+			this.startStreaming(++this.currentPlayIndex);
+			this.currentState = STATE.PLAYING;
+		}
 		dijit.byId("playPause").domNode.className = "mblButton pauseIcon";
 	},
 	
-	startStreaming: function(response) {
-		if (response.length !== undefined) {
-			var srcUrl = _contextRoot+"/service/stream?length="+response.length+"&offset="+response.offset;
-			var streamerContainer = dojo.byId("streamerContainer");
-			var streamer = dojo.byId("streamer");
-			if (streamer !== null) {
-				dojo.destroy(streamer);	
-			}
-			
-			streamer = dojo.create("audio", {id: "streamer", src: srcUrl, autoplay: "true"}, streamerContainer);
-			
-			var self = this;
-			var streamEnded = function(e) {
-				var dfd = org.potpie.musicserver.web.ServiceHandler.streamNext();
-				dfd.addCallbacks(dojo.hitch(self, "startStreaming"), dojo.hitch(self, "requestFailed"));
-			}
-			streamer.addEventListener('ended', streamEnded, false);
-			var update = function(e) {
-				var currentlyPlaying = dojo.byId("currentlyPlaying");
-				while (currentlyPlaying.hasChildNodes()) {
-					currentlyPlaying.removeChild(currentlyPlaying.firstChild);
-				}
-				var msg = "["+self.currentTrack+"]";
-				currentlyPlaying.appendChild(document.createTextNode(msg));
-				var streamer = dojo.byId("streamer");
-				if (streamer !== null) {
-					var seconds = streamer.currentTime.toFixed(0);
-					var minutes = 0;
-					if (seconds > 59) {
-						minutes = seconds / 60;
-						seconds = seconds % 60;
-						msg = "["+minutes.toFixed(0)+" mins, "+seconds+" secs]";
-					} else {
-						msg = "["+seconds+" secs]";
-					}
-					currentlyPlaying.appendChild(document.createElement("br"));
-					currentlyPlaying.appendChild(document.createTextNode(msg));
-				}
-			}
-			streamer.addEventListener('timeupdate', update, false);
-			streamer.load();
-			streamer.play();
+	startStreaming: function(index) {
+		var playList = dijit.byId("playList");
+		var playListItemNode = playList.containerNode.childNodes[index];
+		var songOffset = playListItemNode.attributes.getNamedItem("songOffset");
+		var songLength = playListItemNode.attributes.getNamedItem("songLength");
+		
+		var srcUrl = _contextRoot+"/service/stream?length="+songLength.value+"&offset="+songOffset.value;
+		var streamerContainer = dojo.byId("streamerContainer");
+		var streamer = dojo.byId("streamer");
+		if (streamer !== null) {
+			dojo.destroy(streamer);	
 		}
-		if (response.currentlyPlaying != undefined) {
-			this.currentTrack = response.currentlyPlaying;
+		
+		streamer = dojo.create("audio", {id: "streamer", src: srcUrl, autoplay: "true"}, streamerContainer);
+		
+		var self = this;
+		var streamEnded = function(e) {
+			var playList = dijit.byId("playList");
+			if (self.currentPlayIndex < (playList.containerNode.childNodes.length -1)) {
+				var dfd = org.potpie.musicserver.web.ServiceHandler.streamNext();
+				dfd.addCallbacks(dojo.hitch(self, "requestSuccessful"), dojo.hitch(self, "requestFailed"));
+				++self.currentPlayIndex;
+				self.currentState = STATE.STOPPED;
+				dijit.byId("playPause").domNode.className = "mblButton playIcon";
+			}
+		}
+		streamer.addEventListener('ended', streamEnded, false);
+		var update = function(e) {
 			var currentlyPlaying = dojo.byId("currentlyPlaying");
 			while (currentlyPlaying.hasChildNodes()) {
 				currentlyPlaying.removeChild(currentlyPlaying.firstChild);
 			}
-			currentlyPlaying.appendChild(document.createTextNode("["+response.currentlyPlaying+"]"));
+			var msg = "["+self.currentTrack+"]";
+			currentlyPlaying.appendChild(document.createTextNode(msg));
+			var streamer = dojo.byId("streamer");
+			if (streamer !== null) {
+				var seconds = streamer.currentTime.toFixed(0);
+				var minutes = 0;
+				if (seconds > 59) {
+					minutes = seconds / 60;
+					seconds = seconds % 60;
+					msg = "["+minutes.toFixed(0)+" mins, "+seconds+" secs]";
+				} else {
+					msg = "["+seconds+" secs]";
+				}
+				currentlyPlaying.appendChild(document.createElement("br"));
+				currentlyPlaying.appendChild(document.createTextNode(msg));
+			}
 		}
+		streamer.addEventListener('timeupdate', update, false);
+		streamer.load();
+		streamer.play();
 	},
 	
 	requestSuccessful: function(response) {
