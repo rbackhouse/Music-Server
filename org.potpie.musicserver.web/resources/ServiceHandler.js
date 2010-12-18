@@ -193,7 +193,7 @@ org.potpie.musicserver.web.ServiceHandler = {
             url: url,
             handleAs: "json",
             headers: headers,
-            preventCache: dojo.isIE,
+            preventCache: dojo.isIE
         };
 		if (isPost === true) {
 			bindArgs.postData = dojo.toJson(postData);
