@@ -146,8 +146,8 @@ dojo.declare("org.potpie.musicserver.web.WebController", null, {
 	
 	addAlbumSongsToPlayList: function() {
 		if (this.currentAlbum) {
-			if (self.currentArtist !== undefined) {
-				var dfd = org.potpie.musicserver.web.ServiceHandler.addAlbumToPlayList(this.currentAlbum.album, self.currentArtist.artist);
+			if (this.currentArtist !== undefined) {
+				var dfd = org.potpie.musicserver.web.ServiceHandler.addAlbumToPlayList(this.currentAlbum.album, this.currentArtist.artist);
 			} else { 	
 				var dfd = org.potpie.musicserver.web.ServiceHandler.addAlbumToPlayList(this.currentAlbum.album);
 			}
@@ -156,20 +156,26 @@ dojo.declare("org.potpie.musicserver.web.WebController", null, {
 	},
 	
 	albumToPlayListResult: function(response) {
-		this.playListStore = new dojo.data.ItemFileWriteStore({url: _contextRoot+"/service/playList"});
+		var url = _contextRoot+"/service/playList";
+		url += dojo.isIE ? "?preventCache"+new Date().valueOf() : "";
+		this.playListStore = new dojo.data.ItemFileWriteStore({url: url});
 		this.playList.setStore(this.playListStore);
 		var stackContainer = dijit.byId("stackContainer");
 		var playListContainer = dijit.byId("playListContainer");
 		stackContainer.selectChild(playListContainer);
-		
 	},
 	
 	clearPlayList: function() {
 		var dfd = org.potpie.musicserver.web.ServiceHandler.clearPlayList();
-		dfd.addCallbacks(dojo.hitch(this, "requestSuccessful"), dojo.hitch(this, "requestFailed"));
-		this.playListStore = new dojo.data.ItemFileWriteStore({url: _contextRoot+"/service/playList"});
+		dfd.addCallbacks(dojo.hitch(this, "clearPlayListResult"), dojo.hitch(this, "requestFailed"));
+	},
+	
+	clearPlayListResult: function(response) {
+		var url = _contextRoot+"/service/playList";
+		url += dojo.isIE ? "?preventCache"+new Date().valueOf() : "";
+		this.playListStore = new dojo.data.ItemFileWriteStore({url: url});
 		this.playList.setStore(this.playListStore);
-		
+		this.requestSuccessful(response);
 	},
 	
 	addSelectedSongsToPlayList: function() {
@@ -286,7 +292,9 @@ dojo.declare("org.potpie.musicserver.web.WebController", null, {
 	onResetAlbums: function(e) {
 		dojo.stopEvent(e);
 		var albums = dijit.byId("albums");
-		this.albumsStore = new dojo.data.ItemFileReadStore({url: _contextRoot+"/service/album"});
+		var url = _contextRoot+"/service/album";
+		url += dojo.isIE ? "?preventCache"+new Date().valueOf() : "";
+		this.albumsStore = new dojo.data.ItemFileReadStore({url: url});
 		albums.setStore(this.albumsStore, null, null);
 	}
 });
