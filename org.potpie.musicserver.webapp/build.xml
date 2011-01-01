@@ -24,6 +24,10 @@
 		value="${workspace.dir}/../../targetplatform/rhino/plugins"/>
 	
 	<property
+		name="shrinksafe.dir"
+		value="${workspace.dir}/../../targetplatform/shrinksafe/plugins"/>
+	
+	<property
 		name="export.dir"
 		value="${target.dir}/plugins"/>
 	
@@ -63,6 +67,9 @@
 				<include name="*.jar"/>
 			</lib>
 			<lib dir="${rhino.dir}">
+				<include name="*.jar"/>
+			</lib>
+			<lib dir="${shrinksafe.dir}">
 				<include name="*.jar"/>
 			</lib>
 			<lib dir="${targetplatform.dir}">

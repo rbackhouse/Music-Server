@@ -8,6 +8,14 @@
 	    <param-value>true</param-value>
 	</context-param>
 	<context-param>
+	    <param-name>compressorType</param-name>
+	    <param-value>shrinksafe</param-value>
+	</context-param>
+	<context-param>
+	    <param-name>javaChecksum</param-name>
+	    <param-value>true</param-value>
+	</context-param>
+	<context-param>
     	<param-name>root</param-name>
     	<param-value>CHANGE_ME</param-value>
   	</context-param>
