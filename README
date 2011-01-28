@@ -57,5 +57,5 @@ e,g
 Know Issues
 ----------
 
-The Browser Remote Control does not run in Microsoft Internet Explorer. 
-It should work fine with Firefox, Chrome and Safari.
+If the Apple device is using iOS 4.2.1 the autostaring of tracks in the playlist does not work. According to Apple this is
+working as designed.
