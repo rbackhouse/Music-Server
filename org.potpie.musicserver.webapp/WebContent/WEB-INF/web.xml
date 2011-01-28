@@ -8,8 +8,8 @@
 	    <param-value>true</param-value>
 	</context-param>
 	<context-param>
-	    <param-name>compressorType</param-name>
-	    <param-value>shrinksafe</param-value>
+	    <param-name>compressJS</param-name>
+	    <param-value>true</param-value>
 	</context-param>
 	<context-param>
 	    <param-name>javaChecksum</param-name>

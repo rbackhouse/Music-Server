@@ -35,6 +35,7 @@
 		<war destfile="${target.dir}/musicserver.war" webxml="${basedir}/WebContent/WEB-INF/web.xml">
 			<zipfileset dir="${workspace.dir}/org.potpie.musicserver.web/resources/images" prefix="images"/>
 			<zipfileset dir="${workspace.dir}/org.potpie.musicserver.web/resources/template" prefix="template"/>
+			<zipfileset dir="${workspace.dir}/org.potpie.musicserver.webapp/WebContent/WEB-INF/classes" prefix="WEB-INF/classes"/>
 			<fileset dir="${workspace.dir}/org.potpie.musicserver.web/resources" 
 				        includes="**/*.js,**/*.dtl"/>
 			<fileset dir="${workspace.dir}/org.potpie.musicserver.web/resources/handlers" 
