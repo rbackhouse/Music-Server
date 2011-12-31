@@ -87,10 +87,10 @@ public class MusicDB {
 		invalid = new ArrayList<String>();
 	}
 	
-	public void start() {
+	public boolean start() {
 		if (!root.exists()) {
 			logger.logp(Level.SEVERE, getClass().getName(), "start", "Music directory ["+root.getPath()+"] does not exist");
-			return;
+			return false;
 		}
 		File songsFile = new File(storageDir, "songs.json");
 		if (songsFile.exists()) {
@@ -169,6 +169,7 @@ public class MusicDB {
 		for (String invalidFile : invalid) {
 			logger.logp(Level.SEVERE, getClass().getName(), "start", "Invalid album or artist : "+invalidFile);
 		}
+		return true;
 	}
 	
 	public void stop() {

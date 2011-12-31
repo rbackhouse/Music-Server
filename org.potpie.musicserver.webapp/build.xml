@@ -9,23 +9,19 @@
 	
 	<property
 		name="targetplatform.dir"
-		value="${workspace.dir}/../../targetplatform/zazl/eclipse/plugins"/>
+		value="${workspace.dir}/../targetplatform/zazl/eclipse/plugins"/>
 	
 	<property
 		name="soundapi.dir"
-		value="${workspace.dir}/../../targetplatform/soundapi/eclipse/plugins"/>
+		value="${workspace.dir}/../targetplatform/soundapi/eclipse/plugins"/>
 	
 	<property
-		name="httpclient.dir"
-		value="${workspace.dir}/../../targetplatform/http-client/plugins"/>
+		name="equinox.dir"
+		value="${workspace.dir}/../targetplatform/equinox-SDK-3.6/plugins"/>
 	
 	<property
-		name="rhino.dir"
-		value="${workspace.dir}/../../targetplatform/rhino/plugins"/>
-	
-	<property
-		name="shrinksafe.dir"
-		value="${workspace.dir}/../../targetplatform/shrinksafe/plugins"/>
+		name="dojo.dir"
+		value="${workspace.dir}/../targetplatform/dojo/plugins/org.dojotoolkit.dojo_1.7.1"/>
 	
 	<property
 		name="export.dir"
@@ -33,16 +29,13 @@
 	
 	<target name="assemble">
 		<war destfile="${target.dir}/musicserver.war" webxml="${basedir}/WebContent/WEB-INF/web.xml">
-			<zipfileset dir="${workspace.dir}/org.potpie.musicserver.web/resources/images" prefix="images"/>
-			<zipfileset dir="${workspace.dir}/org.potpie.musicserver.web/resources/template" prefix="template"/>
+			<zipfileset dir="${workspace.dir}/org.potpie.musicserver.web/images" prefix="images"/>
+			<zipfileset dir="${workspace.dir}/org.potpie.musicserver.web/css" prefix="css"/>
 			<zipfileset dir="${workspace.dir}/org.potpie.musicserver.webapp/WebContent/WEB-INF/classes" prefix="WEB-INF/classes"/>
-			<fileset dir="${workspace.dir}/org.potpie.musicserver.web/resources" 
-				        includes="**/*.js,**/*.dtl"/>
-			<fileset dir="${workspace.dir}/org.potpie.musicserver.web/resources/handlers" 
-						includes="**/*.js"/>
-			<fileset dir="${workspace.dir}/org.potpie.musicserver.web/resources">
-				<include name="*.json"/>
-			</fileset>
+			<zipfileset dir="${dojo.dir}/dojo" prefix="dojo"/>
+			<zipfileset dir="${dojo.dir}/dijit" prefix="dijit"/>
+			<zipfileset dir="${dojo.dir}/dojox" prefix="dojox"/>
+			<fileset dir="${workspace.dir}/org.potpie.musicserver.web/" includes="**/*.js,**/*.jsp"/>
 			<lib dir="${soundapi.dir}/javazoom.jl_1.0.1">
 				<include name="jl1.0.1.jar"/>
 			</lib>
@@ -58,32 +51,15 @@
 			<lib dir="${soundapi.dir}/org.tritonus.share_1.0.0">
 				<include name="tritonus_share.jar"/>
 			</lib>
-			<lib dir="${httpclient.dir}/org.apache.httpcomponents.httpclient_4.0.3">
-				<include name="*.jar"/>
-			</lib>
-			<lib dir="${httpclient.dir}/org.apache.httpcomponents.httpcore_4.1">
-				<include name="*.jar"/>
-			</lib>
-			<lib dir="${httpclient.dir}">
-				<include name="*.jar"/>
-			</lib>
-			<lib dir="${rhino.dir}">
-				<include name="*.jar"/>
-			</lib>
-			<lib dir="${shrinksafe.dir}">
-				<include name="*.jar"/>
-			</lib>
 			<lib dir="${targetplatform.dir}">
 				<include name="*.jar"/>
-				<exclude name="org.dojotoolkit.zazl.tests_*.jar"/>
-				<exclude name="org.dojotoolkit.zazl.jetty_*.jar"/>
-				<exclude name="org.dojotoolkit.zazl.servlet.osgi_*.jar"/>
-				<exclude name="org.dojotoolkit.zazl.samples_*.jar"/>
-				<exclude name="org.dojotoolkit.zazl.commonjs_*.jar"/>
 				<exclude name="*.source_*.jar"/>
 			</lib>
 			<lib dir="${export.dir}">
 				<include name="org.potpie.musicserver.service_1.0.0.jar"/>
+			</lib>
+			<lib dir="${equinox.dir}">
+				<include name="org.apache.commons.logging_*.jar"/>
 			</lib>
 		</war>
 		<copy file="${export.dir}/org.potpie.musicserver.util_1.0.0.jar" tofile="${target.dir}/WARModifier.jar"/>

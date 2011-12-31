@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.6"?>
 
-<target name="musicserver" sequenceNumber="-1">
+<target name="musicserver" sequenceNumber="0">
 <locations>
-<location path="${workspace_loc}/../targetplatform/equinox-SDK-3.6" type="Directory"/>
-<location path="${workspace_loc}/../targetplatform/http-client" type="Directory"/>
-<location path="${workspace_loc}/../targetplatform/rhino" type="Directory"/>
-<location path="${workspace_loc}/../targetplatform/shrinksafe" type="Directory"/>
 <location path="${workspace_loc}/../targetplatform/soundapi/eclipse" type="Directory"/>
+<location path="${workspace_loc}/../targetplatform/equinox-SDK-3.6" type="Directory"/>
+<location path="${workspace_loc}/../targetplatform/dojo" type="Directory"/>
 <location path="${workspace_loc}/../targetplatform/zazl/eclipse" type="Directory"/>
+<location path="${workspace_loc}/../targetplatform/jsp" type="Directory"/>
 </locations>
 </target>
-

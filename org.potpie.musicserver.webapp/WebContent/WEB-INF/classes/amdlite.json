@@ -1,0 +1,37 @@
+{
+	"bootstrapModules" : ["loader/amd/amdlite.js"],
+	"debugBootstrapModules" : ["loader/amd/amdlite.js"],
+	"amdconfig" : {
+        "packages": [
+            {
+                "name": "dojo",
+                "location": "dojo",
+                "main": "main"
+            },
+            {
+                "name": "dijit",
+                "location": "dijit",
+                "main": "main"
+            },
+            {
+                "name": "dojox",
+                "location": "dojox",
+                "main": "main"
+            }
+        ],
+        "plugins" : {
+        	"dojo/has" : "optimizer/amd/plugins/dojo/has",
+        	"dojo/text" : "optimizer/amd/plugins/dojo/text",
+        	"dojo/selector/_loader" : "optimizer/amd/plugins/dojo/selector/_loader",
+        	"dojox/gfx/renderer" : "optimizer/amd/plugins/dojox/gfx/renderer"
+        },
+		"i18nPluginId" : "dojo/i18n",
+		"has" : {
+			"host-browser" : 1,
+			"dom" : 1,
+			"dojo-dom-ready-api" : 1,
+			"dojo-sniff" : 1 
+		}
+    },
+	"type" : "amd"
+}

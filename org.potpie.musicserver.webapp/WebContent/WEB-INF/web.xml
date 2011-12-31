@@ -4,8 +4,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<context-param>
-	    <param-name>V8</param-name>
-	    <param-value>true</param-value>
+		<param-name>jsHandlerType</param-name>
+		<param-value>amdlite</param-value>
 	</context-param>
 	<context-param>
 	    <param-name>compressJS</param-name>
@@ -15,25 +15,6 @@
 	    <param-name>javaChecksum</param-name>
 	    <param-value>true</param-value>
 	</context-param>
-	<context-param>
-    	<param-name>root</param-name>
-    	<param-value>CHANGE_ME</param-value>
-  	</context-param>
-  	<context-param>
-    	<param-name>storageDir</param-name>
-    	<param-value>CHANGE_ME</param-value>
-  	</context-param>
-  	<context-param>
-    	<param-name>skipScan</param-name>
-    	<param-value>true</param-value>
-  	</context-param>
-    <servlet>
-        <description></description>
-        <display-name>ZazlServlet</display-name>
-        <servlet-name>ZazlServlet</servlet-name>
-        <servlet-class>org.dojotoolkit.zazl.servlet.ZazlServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
     <servlet>
         <description></description>
         <display-name>JSServlet</display-name>
@@ -51,10 +32,6 @@
     <servlet-mapping>
         <servlet-name>MusicServerServlet</servlet-name>
         <url-pattern>/service/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ZazlServlet</servlet-name>
-        <url-pattern>/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>JSServlet</servlet-name>

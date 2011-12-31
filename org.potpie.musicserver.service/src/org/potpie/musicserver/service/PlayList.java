@@ -103,4 +103,8 @@ public class PlayList {
 			return false;
 		}
 	}
+	
+	public int getCurrentIndex() {
+		return currentIndex;
+	}
 }

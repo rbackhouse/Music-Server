@@ -23,10 +23,10 @@
 -->
 <plugin>
    <extension
-         point="org.dojotoolkit.zazl.servlet.osgi.contentProvider">
-      <contentProvider
-            alias="/org/potpie/musicserver/web"
-            base="/resources">
-      </contentProvider>
+         point="org.eclipse.equinox.http.registry.httpcontexts">
+      <httpcontext
+            id="org.potpie.musicserver.httpcontext">
+            <resource-mapping path="/"/>
+      </httpcontext>
    </extension>
 </plugin>

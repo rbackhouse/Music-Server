@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Music Server Service
 Bundle-SymbolicName: org.potpie.musicserver.service;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: org.potpie.musicserver.service.Activator
 Import-Package: javax.servlet,
  javax.servlet.http,
  javazoom.jl.decoder,
@@ -12,10 +11,6 @@ Import-Package: javax.servlet,
  javazoom.jlgui.basicplayer,
  javazoom.spi.mpeg.sampled.file,
  org.dojotoolkit.json,
- org.dojotoolkit.zazl.callback,
- org.dojotoolkit.zazl.optimizer,
- org.dojotoolkit.zazl.servlet,
- org.dojotoolkit.zazl.util,
  org.kc7bfi.jflac,
  org.kc7bfi.jflac.apps,
  org.kc7bfi.jflac.frame,
@@ -28,4 +23,5 @@ Import-Package: javax.servlet,
  org.osgi.util.tracker,
  org.tritonus.share,
  org.tritonus.share.sampled.file
-Require-Bundle: org.dojotoolkit.zazl.servlet.osgi;bundle-version="1.0.0"
+Export-Package: org.potpie.musicserver.service,
+ org.potpie.musicserver.service.db

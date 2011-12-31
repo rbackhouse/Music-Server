@@ -22,4 +22,12 @@
  THE SOFTWARE.
 -->
 <plugin>
+   <extension
+         point="org.eclipse.equinox.http.registry.servlets">
+      <servlet
+            alias="/*.jsp"
+            class="org.eclipse.equinox.jsp.jasper.registry.JSPFactory"
+            httpcontextId="org.potpie.musicserver.httpcontext">
+      </servlet>
+   </extension>
 </plugin>

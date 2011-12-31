@@ -1,0 +1,97 @@
+.fastForwardIcon {
+	background-image: url('../images/fastForward.png');
+	background-repeat: no-repeat; 
+	width: 34px;
+	height: 34px;
+}
+
+.fastForwardIconSelected {
+	background-image: url('../images/fastForwardSelected.png');
+	background-repeat: no-repeat; 
+	width: 34px;
+	height: 34px;
+}
+
+.pauseIcon {
+	background-image: url('../images/pause.png');
+	background-repeat: no-repeat; 
+	width: 34px;
+	height: 34px;
+}
+
+.pauseIconSelected {
+	background-image: url('../images/pauseSelected.png');
+	background-repeat: no-repeat; 
+	width: 34px;
+	height: 34px;
+}
+
+.playIcon {
+	background-image: url('../images/play.png');
+	background-repeat: no-repeat; 
+	width: 34px;
+	height: 34px;
+}
+
+.playIconSelected {
+	background-image: url('../images/playSelected.png');
+	background-repeat: no-repeat; 
+	width: 34px;
+	height: 34px;
+}
+
+.stopIcon {
+	background-image: url('../images/stop.png');
+	background-repeat: no-repeat; 
+	width: 34px;
+	height: 34px;
+}
+
+.stopIconSelected {
+	background-image: url('../images/stopSelected.png');
+	background-repeat: no-repeat; 
+	width: 34px;
+	height: 34px;
+}
+
+.rewindIcon {
+	background-image: url('../images/rewind.png');
+	background-repeat: no-repeat; 
+	width: 34px;
+	height: 34px;
+}
+
+.rewindIconSelected {
+	background-image: url('../images/rewindSelected.png');
+	background-repeat: no-repeat; 
+	width: 34px;
+	height: 34px;
+}
+
+.plusIcon {
+	background-image: url('../images/plus.png');
+	background-repeat: no-repeat; 
+	width: 34px;
+	height: 34px;
+}
+
+.plusIconSelected {
+	background-image: url('../images/plusSelected.png');
+	background-repeat: no-repeat; 
+	width: 34px;
+	height: 34px;
+}
+
+.minusIcon {
+	background-image: url('../images/minus.png');
+	background-repeat: no-repeat; 
+	width: 34px;
+	height: 34px;
+}
+
+.minusIconSelected {
+	background-image: url('../images/minusSelected.png');
+	background-repeat: no-repeat; 
+	width: 34px;
+	height: 34px;
+}

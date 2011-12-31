@@ -124,6 +124,7 @@ public class MusicPlayer {
 			return new MusicFilePlayerState(); 
 		}
 	}
+	
 	private MusicFilePlayer createMusicFilePlayer(Map songIndex) {
 		MusicFilePlayer musicFilePlayer = null;
 		

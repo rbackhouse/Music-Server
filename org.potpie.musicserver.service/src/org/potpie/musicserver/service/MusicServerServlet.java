@@ -21,14 +21,20 @@
 *******************************************************************************/
 package org.potpie.musicserver.service;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
@@ -53,50 +59,68 @@ public class MusicServerServlet extends HttpServlet {
     private MusicDB musicDB = null;
     private MusicPlayer musicPlayer = null;
 	private Random random = new Random();
-	private String root = null;
-	private String storageDir = null;
+    private String rootDir = null;
+    private String storageDir = null;
+    private boolean skipScan = false;
+	private File tempDir = null;
     
     public MusicServerServlet() {}
 
-    public MusicServerServlet(String root, String storageDir) {
-    	this.root = root;
+    public MusicServerServlet(String rootDir, String storageDir, boolean skipScan) {
+    	this.rootDir = rootDir;
     	this.storageDir = storageDir;
+    	this.skipScan = skipScan;
     }
     
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		if (root == null) {
-			root = config.getServletContext().getInitParameter("root");
+		tempDir = (File)config.getServletContext().getAttribute("javax.servlet.context.tempdir");
+		logger.logp(Level.INFO, getClass().getName(), "init", "tempDir = ["+tempDir+"]");
+		File configFile = new File(tempDir, "config.properties");
+		if (configFile.exists()) {
+			Properties configProps = new Properties();
+			InputStream is = null;
+			try {
+				is = new BufferedInputStream(new FileInputStream(configFile));
+				configProps.load(is);
+				storageDir = configProps.getProperty("storageDir");
+				rootDir = configProps.getProperty("rootDir");
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (is != null) { try { is.close(); } catch (IOException e) {}}
+			}
 		}
 		if (storageDir == null) {
 			storageDir = config.getServletContext().getInitParameter("storageDir");
 		}
-		if (storageDir != null && root != null) {
-			logger.logp(Level.INFO, getClass().getName(), "init", "root = ["+root+"] storageDir = ["+storageDir+"]");
-			boolean skipScan = false;
-			String strSkipScan = config.getServletContext().getInitParameter("skipScan");
-			if (strSkipScan != null) {
-				skipScan = Boolean.valueOf(strSkipScan);
-			}
-	        musicDB = new MusicDB(new File(root), new File(storageDir), skipScan);
-	        getServletContext().setAttribute("musicDB", musicDB);
-	        musicDB.start();
-	        musicPlayer = new MusicPlayer(musicDB);
-	        getServletContext().setAttribute("musicPlayer", musicPlayer);
+		if (rootDir == null) {
+			rootDir = config.getServletContext().getInitParameter("root");
+		}
+		String strSkipScan = config.getServletContext().getInitParameter("skipScan");
+		if (strSkipScan != null) {
+			skipScan = Boolean.valueOf(strSkipScan);
+		}
+		if (storageDir != null && rootDir != null) {
+			initializeDB(false);
 		}
 	}
 
 	public void destroy() {
 		super.destroy();
-		musicDB.stop();
+		if (musicDB != null) {
+			musicDB.stop();
+		}
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		/*
 		if (musicDB == null) {
 			resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Server failed to initialize correctly. Check the logs");
 			return;
 		}
+		*/
 		String[] segments = getSegments(req.getPathInfo());
 		if (segments.length > 0) {
 			if (segments[0].equals("artist")) {
@@ -122,6 +146,7 @@ public class MusicServerServlet extends HttpServlet {
 				else {
 					List<String> artists = musicDB.getAllArtists();
 					Map artistDataStore = new HashMap();
+					List tabs = null;
 					artistDataStore.put("identifier", "artist");
 					artistDataStore.put("label", "artist");
 					List items = new ArrayList();
@@ -141,15 +166,52 @@ public class MusicServerServlet extends HttpServlet {
 						}
 						catch (NumberFormatException e) {
 						}
-					}
-					else {
+					} else if (req.getParameter("tabs") != null) {
+						tabs = new ArrayList();
+						Map tab = new HashMap();
+						tab.put("label", "A-");
+						List artistList = new ArrayList();
+						tab.put("artistList", artistList);
+						tab.put("startIndex", new Integer(0));
+						tabs.add(tab);
+						List currentList = artistList;
+						int currentListCount = 0;
+						int maxPerTab = artists.size() / 5;
+						for (int i = 0; i < artists.size(); i++) {
+							if (currentListCount > maxPerTab) {
+								tab.put("label",(String)tab.get("label") + artists.get(i-1).charAt(0)); 
+								tab.put("endIndex", new Integer(i-1));
+								tab = new HashMap();
+								tab.put("label", artists.get(i-1).charAt(0)+"-");
+								artistList = new ArrayList();
+								tab.put("artistList", artistList);
+								tab.put("startIndex", new Integer(i));
+								tabs.add(tab);
+								currentList = null;
+								currentListCount = 0;
+							}
+							if (currentList != null) {
+								Map artistItem = new HashMap();
+								artistItem.put("id", i+1);
+								artistItem.put("label", artists.get(i));
+								currentList.add(artistItem);
+							}
+							currentListCount++;
+						}
+						tab.put("label",(String)tab.get("label") + artists.get(artists.size()-1).charAt(0)); 
+						tab.put("endIndex", new Integer(artists.size()-1));
+					} else {
 						for (String artist: artists) {
 							Map artistData = new HashMap();
 							artistData.put("artist", artist);
 							items.add(artistData);
 						}
 					}
-					JSONSerializer.serialize(w, artistDataStore, true);
+					if (tabs != null) {
+						JSONSerializer.serialize(w, tabs, true);
+					} else {
+						JSONSerializer.serialize(w, artistDataStore, true);
+					}
 				}
 			}
 			else if (segments[0].equals("album")) {
@@ -374,10 +436,6 @@ public class MusicServerServlet extends HttpServlet {
 	
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (musicDB == null) {
-			resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Server failed to initialize correctly. Check the logs");
-			return;
-		}
 		resp.setContentType("test/json");
 		String[] segments = getSegments(req.getPathInfo());
 		if (segments.length > 0) {
@@ -386,30 +444,32 @@ public class MusicServerServlet extends HttpServlet {
 				for (Map<String, Number> song : songs) {
 					musicPlayer.getPlayList().add(song);
 				}
-			}
-			if (segments[0].equals("addToStreamPlayList")) {
+			} else if (segments[0].equals("addToStreamPlayList")) {
 				List<Map<String, Number>> songs = (List<Map<String, Number>>)JSONParser.parse(req.getReader());
 				for (Map<String, Number> song : songs) {
 					PlayList playList = getSessionPlayList(req.getSession());
 					playList.add(song);
 				}
-			}
-			else if (segments[0].equals("removeFromPlayList")) {
+			} else if (segments[0].equals("removeFromPlayList")) {
 				List<Map<String, Number>> songs = (List<Map<String, Number>>)JSONParser.parse(req.getReader());
 				for (Map<String, Number> song : songs) {
 					musicPlayer.getPlayList().remove(song);
 				}
-			}
-			else if (segments[0].equals("removeFromStreamPlayList")) {
+			} else if (segments[0].equals("removeFromStreamPlayList")) {
 				List<Map<String, Number>> songs = (List<Map<String, Number>>)JSONParser.parse(req.getReader());
 				for (Map<String, Number> song : songs) {
 					PlayList playList = getSessionPlayList(req.getSession());
 					playList.remove(song);
 				}
-			}
-			else if (segments[0].equals("stream")) {
+			} else if (segments[0].equals("stream")) {
 				PlayList playList = getSessionPlayList(req.getSession());
 				MusicStreamer.stream(playList, req, resp);
+			} else if (segments[0].equals("initialize")) {
+				Map<String, String> config = (Map<String, String>)JSONParser.parse(req.getReader());
+				this.rootDir = config.get("rootDir");
+				this.storageDir = config.get("storageDir");
+				initializeDB(true);
+				writeCurrentlyPlaying(resp.getWriter());
 			}
 		}
 	}
@@ -445,21 +505,27 @@ public class MusicServerServlet extends HttpServlet {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void writeCurrentlyPlaying(Writer w) throws IOException {
 		Map currentlyPlaying = new HashMap();
-		PlayListEntry entry = musicPlayer.getPlayList().getCurrentlyPlaying();
-		if (entry != null) {
-			long seconds = TimeUnit.MICROSECONDS.toSeconds(musicPlayer.getCurrentPosition());
-			long minutes = 0;
-			if (seconds > 59) {
-				minutes = seconds / 60;
-				seconds = seconds % 60;
+		if (musicDB != null) {
+			PlayListEntry entry = musicPlayer.getPlayList().getCurrentlyPlaying();
+			if (entry != null) {
+				long seconds = TimeUnit.MICROSECONDS.toSeconds(musicPlayer.getCurrentPosition());
+				long minutes = 0;
+				if (seconds > 59) {
+					minutes = seconds / 60;
+					seconds = seconds % 60;
+				}
+				Map song = musicDB.getSongDataForSongIndex(entry.getSongIndex());
+				currentlyPlaying.put("currentlyPlaying", song.get("author") + " : "+song.get("title"));
+				currentlyPlaying.put("currentPosition", minutes + " mins "+ seconds + " secs");
 			}
-			Map song = musicDB.getSongDataForSongIndex(entry.getSongIndex());
-			currentlyPlaying.put("currentlyPlaying", song.get("author") + " : "+song.get("title"));
-			currentlyPlaying.put("currentPosition", minutes + " mins "+ seconds + " secs");
-		}
-		else {
-			currentlyPlaying.put("currentlyPlaying", "Nothing");
-			currentlyPlaying.put("currentPosition", "0 Secs");
+			else {
+				currentlyPlaying.put("currentlyPlaying", "Nothing");
+				currentlyPlaying.put("currentPosition", "0 Secs");
+			}
+			currentlyPlaying.put("currentState", musicPlayer.getState().getState().ordinal());
+			currentlyPlaying.put("currentVolume", new Float(musicPlayer.getVolume()*10));
+		} else {
+			currentlyPlaying.put("currentState", new Integer(3));
 		}
 		JSONSerializer.serialize(w, currentlyPlaying, true);
 	}
@@ -467,23 +533,30 @@ public class MusicServerServlet extends HttpServlet {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void writeCurrentlyStreaming(Writer w, PlayList playList) throws IOException {
 		Map currentlyStreaming = new HashMap();
-		PlayListEntry entry = playList.getCurrentlyPlaying();
-		if (entry != null) {
-			long seconds = TimeUnit.MICROSECONDS.toSeconds(musicPlayer.getCurrentPosition());
-			long minutes = 0;
-			if (seconds > 59) {
-				minutes = seconds / 60;
-				seconds = seconds % 60;
+		if (musicDB != null) {
+			PlayListEntry entry = playList.getCurrentlyPlaying();
+			if (entry != null) {
+				long seconds = TimeUnit.MICROSECONDS.toSeconds(musicPlayer.getCurrentPosition());
+				long minutes = 0;
+				if (seconds > 59) {
+					minutes = seconds / 60;
+					seconds = seconds % 60;
+				}
+				Map song = musicDB.getSongDataForSongIndex(entry.getSongIndex());
+				currentlyStreaming.put("currentState", new Integer(1));
+				currentlyStreaming.put("currentlyPlaying", song.get("author") + " : "+song.get("title"));
+				currentlyStreaming.put("currentPosition", minutes + " mins "+ seconds + " secs");
+				currentlyStreaming.put("length", entry.getSongIndex().get("length"));
+				currentlyStreaming.put("offset", entry.getSongIndex().get("offset"));
 			}
-			Map song = musicDB.getSongDataForSongIndex(entry.getSongIndex());
-			currentlyStreaming.put("currentlyPlaying", song.get("author") + " : "+song.get("title"));
-			currentlyStreaming.put("currentPosition", minutes + " mins "+ seconds + " secs");
-			currentlyStreaming.put("length", entry.getSongIndex().get("length"));
-			currentlyStreaming.put("offset", entry.getSongIndex().get("offset"));
-		}
-		else {
-			currentlyStreaming.put("currentlyPlaying", "Nothing");
-			currentlyStreaming.put("currentPosition", "0 Secs");
+			else {
+				currentlyStreaming.put("currentState", new Integer(0));
+				currentlyStreaming.put("currentlyPlaying", "Nothing");
+				currentlyStreaming.put("currentPosition", "0 Secs");
+			}
+			currentlyStreaming.put("currentPlayIndex", new Integer(playList.getCurrentIndex()+1));
+		} else {
+			currentlyStreaming.put("currentState", new Integer(3));
 		}
 		JSONSerializer.serialize(w, currentlyStreaming, true);
 	}
@@ -609,5 +682,33 @@ public class MusicServerServlet extends HttpServlet {
 		}
 		
 		return playList;
+	}
+	
+	private void initializeDB(boolean writeConfig) {
+		logger.logp(Level.INFO, getClass().getName(), "initializeDB", "rootDir = ["+rootDir+"] storageDir = ["+storageDir+"]");
+        musicDB = new MusicDB(new File(rootDir), new File(storageDir), skipScan);
+        getServletContext().setAttribute("musicDB", musicDB);
+        if (musicDB.start()) {
+            musicPlayer = new MusicPlayer(musicDB);
+            getServletContext().setAttribute("musicPlayer", musicPlayer);
+            if (writeConfig) {
+        		File configFile = new File(tempDir, "config.properties");
+        		Properties configProps = new Properties();
+        		configProps.setProperty("rootDir", rootDir);
+        		configProps.setProperty("storageDir", storageDir);
+        		OutputStream os = null;
+        		try {
+        			os = new FileOutputStream(configFile);
+        			configProps.store(os, "");
+        			logger.logp(Level.INFO, getClass().getName(), "initializeDB", "Config written to ["+configFile+"]");
+        		} catch (IOException e) {
+        			e.printStackTrace();
+        		} finally {
+    				if (os != null) { try { os.close(); } catch (IOException e) {}}
+        		}
+            }
+        } else {
+        	musicDB = null;
+        }
 	}
 }
