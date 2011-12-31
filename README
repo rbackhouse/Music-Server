@@ -42,10 +42,14 @@ Other URLs:
 3) http://hostname:port/musicserver/stream.jsp for the iphone/itouch streamer
 
 
-Know Issues
+Known Issues
 ----------
 
 1) If the Apple device is using iOS 4.2.1 the autostaring of tracks in the playlist does not work. According to Apple this is
 working as designed.
 2) Streaming does not currently work on android devices
 3) Streaming is unreliable in devices running versions of IOS less than 5
+
+Blog
+----
+http://diymusicserver.blogspot.com
