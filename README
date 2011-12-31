@@ -2,60 +2,50 @@ Java/JavaScript based Music Server for Home Use
 -----------------------------------------------
 
 The purpose of this project is to provide a Music Server that can be used in a home environment to play music 
-files (mp3 and flac format) and control them via a browser or itouch/iphone based user interface. It also can 
-stream your music files to your itouch/iphone.
+files (mp3 and flac format) and control them via a browser or mobile (IOS/android) based user interface. It also can 
+stream your music files to your itouch/iphone/ipad.
 
-Details of how this software evolved can be found at http://diymusicserver.blogspot.com/
+It is built as a JEE Web Application using the following frameworks/technologies
+
+1) For the UI Dojo Toolkit 1.7.1 (http://dojotoolkit.org/) + Zazl Optimizer (https://github.com/zazl/optimizer)
+2) For playing MP3 files jlayer (http://www.javazoom.net/javalayer/sources.html)
+3) For playing FLAC files jflac (http://jflac.sourceforge.net/)
 
 Quick Start
 -----------
 
 Prereqs :
 A 1.6 java runtime
-A JEE WebContainer such as Apache Tomcat or Jetty. Preferred versions are Tomcat 6.0 or Jetty 7.1
+A JEE WebContainer such as Apache Tomcat or Jetty. 
 
 Download the musicserver.war file from the downloads page 
 (https://github.com/downloads/rbackhouse/Music-Server/musicserver.war)
-Download the WARModifier.jar file from the downloads page 
-(https://github.com/downloads/rbackhouse/Music-Server/WARModifier.jar)
 
-You need to modify the WAR file to set 2 configuration locations.
-
-1) The path to your music collection. It can be a Windows UNC path for an network path. 
-2) The path to a directory that will store the music information database
-
-To set these configuration values use your java runtime to run the WARModifer.jar file. Assuming that both 
-the war and jar file are in the same directory run with this command
-
-java -jar WARModifier.jar musicserver.war <pathtomusic> <pathtodb>
-
-Now copy the WAR file to your WebContainer webapps directory (or however the WebContainer expects it 
+Copy the WAR file to your WebContainer webapps directory (or however the WebContainer expects it 
 to be deployed).
 
-Start up the WebContainer and access the User Interface via these urls 
+Start up the WebContainer and access the desktop User Interface via http://hostname:port/musicserver/desktop.jsp
 
-1) http://hostname:port/musicserver/web for the Browser based remote control 
-2) http://hostname:port/musicserver/rc for the iphone/itouch remote control
-3) http://hostname:port/musicserver/stream for the iphone/itouch streamer
+First Time configuration :
+
+You will be prompted to provide 2 configuration locations.
+
+1) The path to your music collection. It can be a Windows UNC path for an network path. 
+2) The path to a directory that will store the music information database.
 
 Note: 
-If using Jetty 7.1 you will need to ensure that serving aliases support is enabled.
+If using Jetty you will need to ensure that a work directory is created in the Jetty root directory. 
+This will ensure the configuration file is saved between server restarts
 
-In the /etc/webdefault.xml file set the aliases attribute to true on the default servlet
-
-e,g
-
-  <servlet>
-    <servlet-name>default</servlet-name>
-    <servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>
-    <init-param>
-      <param-name>aliases</param-name>
-      <param-value>true</param-value>
-    </init-param>
+Other URLs:
+2) http://hostname:port/musicserver/mobile.jsp for the mobile (iOS or android) remote control
+3) http://hostname:port/musicserver/stream.jsp for the iphone/itouch streamer
 
 
 Know Issues
 ----------
 
-If the Apple device is using iOS 4.2.1 the autostaring of tracks in the playlist does not work. According to Apple this is
+1) If the Apple device is using iOS 4.2.1 the autostaring of tracks in the playlist does not work. According to Apple this is
 working as designed.
+2) Streaming does not currently work on android devices
+3) Streaming is unreliable in devices running versions of IOS less than 5
