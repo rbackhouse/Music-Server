@@ -2,8 +2,8 @@ Java/JavaScript based Music Server for Home Use
 -----------------------------------------------
 
 The purpose of this project is to provide a Music Server that can be used in a home environment to play music 
-files (mp3 and flac format) and control them via a browser or mobile (IOS/android) based user interface. It also can 
-stream your music files to your itouch/iphone/ipad.
+files (mp3 and flac format) and control them via a browser or mobile (iOS/android) based user interface. It also can 
+stream your music files to your iOS/android device (Using HTML5 audio tags)
 
 It is built as a JEE Web Application using the following frameworks/technologies
 
@@ -39,16 +39,14 @@ This will ensure the configuration file is saved between server restarts
 
 Other URLs:
 2) http://hostname:port/musicserver/mobile.jsp for the mobile (iOS or android) remote control
-3) http://hostname:port/musicserver/stream.jsp for the iphone/itouch streamer
+3) http://hostname:port/musicserver/stream.jsp for the iOS/android streamer
 
 
 Known Issues
 ----------
 
-1) If the Apple device is using iOS 4.2.1 the autostaring of tracks in the playlist does not work. According to Apple this is
-working as designed.
-2) Streaming does not currently work on android devices
-3) Streaming is unreliable in devices running versions of IOS less than 5
+1) iOS devices cannot autostart tracks in the playlist. 
+2) Streaming is unreliable in devices running versions of iOS less than 5
 
 Blog
 ----

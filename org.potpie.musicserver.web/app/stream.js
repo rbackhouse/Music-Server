@@ -153,7 +153,9 @@ define(['dijit/registry',
 	};
 	
 	var playPause = function(e) {
-		dojo.stopEvent(e);
+		if (e) {
+			dojo.stopEvent(e);
+		}
 		var buttonClass = "playIcon";
 		var streamer = dom.byId("streamer");
 		switch (currentState) {
@@ -221,18 +223,20 @@ define(['dijit/registry',
 		}
 		
 		streamer = construct.create("audio", {id: "streamer", src: srcUrl, autoplay: "true"}, streamerContainer);
-		
+
 		var streamEnded = function(e) {
+			console.log("ended");
 			var playList = dijit.byId("playList");
 			if (currentPlayIndex < (playList.containerNode.childNodes.length -1)) {
 				var dfd = servicehandler.streamNext();
 				dfd.addCallbacks(requestSuccessful, requestFailed);
 				++currentPlayIndex;
 				currentState = STATE.STOPPED;
-				registry.byId("playPause").domNode.className = "mblButton playIcon";
+				playPause();
 			}
 		}
 		streamer.addEventListener('ended', streamEnded, false);
+
 		var update = function(e) {
 			var currentlyPlaying = dom.byId("currentlyPlaying");
 			while (currentlyPlaying.hasChildNodes()) {
@@ -256,8 +260,35 @@ define(['dijit/registry',
 			}
 		}
 		streamer.addEventListener('timeupdate', update, false);
+
+		streamer.addEventListener('canplaythrough', function() {
+			streamer.play();
+		}, false);
+
+		/*
+		var eventListener = function(e) {
+			console.log("media event: "+e.type);
+		}
+		streamer.addEventListener('canplay', eventListener, false);
+		streamer.addEventListener('durationchange', eventListener, false);
+		streamer.addEventListener('emptied', eventListener, false);
+		streamer.addEventListener('error', eventListener, false);
+		streamer.addEventListener('loadeddata', eventListener, false);
+		streamer.addEventListener('loadedmetadata', eventListener, false);
+		streamer.addEventListener('loadstart', eventListener, false);
+		streamer.addEventListener('pause', eventListener, false);
+		streamer.addEventListener('playing', eventListener, false);
+		streamer.addEventListener('progress', eventListener, false);
+		streamer.addEventListener('ratechange', eventListener, false);
+		streamer.addEventListener('readystatechange', eventListener, false);
+		streamer.addEventListener('seeked', eventListener, false);
+		streamer.addEventListener('seeking', eventListener, false);
+		streamer.addEventListener('stalled', eventListener, false);
+		streamer.addEventListener('suspend', eventListener, false);
+		streamer.addEventListener('volumechange', eventListener, false);
+		streamer.addEventListener('waiting', eventListener, false);
+		*/
 		streamer.load();
-		streamer.play();
 	};
 	
 	var songClicked = function(e) {
