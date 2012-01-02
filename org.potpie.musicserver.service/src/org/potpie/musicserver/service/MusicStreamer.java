@@ -39,10 +39,11 @@ import org.kc7bfi.jflac.frame.Frame;
 import org.kc7bfi.jflac.metadata.StreamInfo;
 import org.kc7bfi.jflac.util.ByteData;
 import org.kc7bfi.jflac.util.WavWriter;
+import org.potpie.musicserver.service.db.MusicDB;
 
 public class MusicStreamer {
 
-    public static void stream(PlayList playList, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public static void stream(MusicDB musicDB, HttpServletRequest request, HttpServletResponse response) throws IOException {
     	
     	String strOffset = request.getParameter("offset");
     	String strLength = request.getParameter("length");
@@ -50,8 +51,7 @@ public class MusicStreamer {
 			Map<String, Number> songIndex = new HashMap<String, Number>();
 			songIndex.put("length", new Long(strLength));
 			songIndex.put("offset", new Long(strOffset));
-			PlayListEntry entry = playList.findEntry(songIndex);
-			Map songData = entry.getSongData();
+			Map songData = musicDB.getSongDataForSongIndex(songIndex);
 			File musicFile = new File((String)songData.get("path"));
 			String type = (String)songData.get("type");
 			writeResponse(request, response, musicFile, type);

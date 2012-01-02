@@ -115,12 +115,6 @@ public class MusicServerServlet extends HttpServlet {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		/*
-		if (musicDB == null) {
-			resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Server failed to initialize correctly. Check the logs");
-			return;
-		}
-		*/
 		String[] segments = getSegments(req.getPathInfo());
 		if (segments.length > 0) {
 			if (segments[0].equals("artist")) {
@@ -429,7 +423,7 @@ public class MusicServerServlet extends HttpServlet {
 			}
 			else if (segments[0].equals("stream")) {
 				PlayList playList = getSessionPlayList(req.getSession());
-				MusicStreamer.stream(playList, req, resp);
+				MusicStreamer.stream(musicDB, req, resp);
 			}
 		}
 	}
@@ -463,7 +457,7 @@ public class MusicServerServlet extends HttpServlet {
 				}
 			} else if (segments[0].equals("stream")) {
 				PlayList playList = getSessionPlayList(req.getSession());
-				MusicStreamer.stream(playList, req, resp);
+				MusicStreamer.stream(musicDB, req, resp);
 			} else if (segments[0].equals("initialize")) {
 				Map<String, String> config = (Map<String, String>)JSONParser.parse(req.getReader());
 				this.rootDir = config.get("rootDir");
@@ -483,7 +477,7 @@ public class MusicServerServlet extends HttpServlet {
 		if (segments.length > 0) {
 			if (segments[0].equals("stream")) {
 				PlayList playList = getSessionPlayList(req.getSession());
-				MusicStreamer.stream(playList, req, resp);
+				MusicStreamer.stream(musicDB, req, resp);
 			}
 		}
 	}
@@ -497,7 +491,7 @@ public class MusicServerServlet extends HttpServlet {
 		if (segments.length > 0) {
 			if (segments[0].equals("stream")) {
 				PlayList playList = getSessionPlayList(req.getSession());
-				MusicStreamer.stream(playList, req, resp);
+				MusicStreamer.stream(musicDB, req, resp);
 			}
 		}
 	}
