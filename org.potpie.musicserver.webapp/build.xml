@@ -17,11 +17,15 @@
 	
 	<property
 		name="equinox.dir"
-		value="${workspace.dir}/../targetplatform/equinox-SDK-3.6/plugins"/>
+		value="${workspace.dir}/../targetplatform/equinox-SDK-3.7/plugins"/>
 	
 	<property
 		name="dojo.dir"
 		value="${workspace.dir}/../targetplatform/dojo/plugins/org.dojotoolkit.dojo_1.7.1"/>
+	
+	<property
+		name="nekohtml.dir"
+		value="${workspace.dir}/../targetplatform/nekohtml/plugins/org.cyberneko.html_1.9.15"/>
 	
 	<property
 		name="export.dir"
@@ -35,7 +39,7 @@
 			<zipfileset dir="${dojo.dir}/dojo" prefix="dojo"/>
 			<zipfileset dir="${dojo.dir}/dijit" prefix="dijit"/>
 			<zipfileset dir="${dojo.dir}/dojox" prefix="dojox"/>
-			<fileset dir="${workspace.dir}/org.potpie.musicserver.web/" includes="**/*.js,**/*.jsp"/>
+			<fileset dir="${workspace.dir}/org.potpie.musicserver.web/" includes="**/*.js,**/*.jsp,**/*.html"/>
 			<lib dir="${soundapi.dir}/javazoom.jl_1.0.1">
 				<include name="jl1.0.1.jar"/>
 			</lib>
@@ -60,6 +64,9 @@
 			</lib>
 			<lib dir="${equinox.dir}">
 				<include name="org.apache.commons.logging_*.jar"/>
+			</lib>
+			<lib dir="${nekohtml.dir}">
+				<include name="*.jar"/>
 			</lib>
 		</war>
 		<copy file="${export.dir}/org.potpie.musicserver.util_1.0.0.jar" tofile="${target.dir}/WARModifier.jar"/>

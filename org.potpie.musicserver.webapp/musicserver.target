@@ -4,9 +4,10 @@
 <target name="musicserver" sequenceNumber="0">
 <locations>
 <location path="${workspace_loc}/../targetplatform/soundapi/eclipse" type="Directory"/>
-<location path="${workspace_loc}/../targetplatform/equinox-SDK-3.6" type="Directory"/>
+<location path="${workspace_loc}/../targetplatform/equinox-SDK-3.7" type="Directory"/>
 <location path="${workspace_loc}/../targetplatform/dojo" type="Directory"/>
 <location path="${workspace_loc}/../targetplatform/zazl/eclipse" type="Directory"/>
 <location path="${workspace_loc}/../targetplatform/jsp" type="Directory"/>
+<location path="${workspace_loc}/../targetplatform/nekohtml" type="Directory"/>
 </locations>
 </target>

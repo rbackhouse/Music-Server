@@ -4,11 +4,11 @@
 <setEntry value="org.apache.commons.el:1.0.0.v201004212143:default:true"/>
 <setEntry value="org.apache.jasper:5.5.17.v201004212143:default:true"/>
 <setEntry value="org.dojotoolkit.dojo:1.7.1:default:true"/>
-<setEntry value="org.eclipse.equinox.http.jetty:2.0.0.v20100503:default:true"/>
-<setEntry value="org.eclipse.equinox.http.registry:1.1.0.v20100503:default:true"/>
-<setEntry value="org.eclipse.equinox.http.servlet:1.1.0.v20100503:default:true"/>
+<setEntry value="org.eclipse.equinox.http.jetty:2.0.100.v20110502:default:true"/>
+<setEntry value="org.eclipse.equinox.http.registry:1.1.100.v20110502:default:true"/>
+<setEntry value="org.eclipse.equinox.http.servlet:1.1.200.v20110502:default:true"/>
 <setEntry value="org.eclipse.equinox.jsp.jasper.registry:1.0.200.v20100503:default:true"/>
-<setEntry value="org.eclipse.equinox.jsp.jasper:1.0.200.v20100421:default:true"/>
+<setEntry value="org.eclipse.equinox.jsp.jasper:1.0.300.v20110502:default:true"/>
 <setEntry value="org.potpie.musicserver.bootstrap:1.0.0.qualifier:default:true"/>
 <setEntry value="org.potpie.musicserver.service:1.0.0:default:true"/>
 <setEntry value="org.potpie.musicserver.web:1.0.0:default:true"/>
@@ -30,7 +30,7 @@
 <stringAttribute key="org.eclipse.debug.core.source_locator_memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;sourceLookupDirector&gt;&#10;&lt;sourceContainers duplicates=&quot;false&quot;&gt;&#10;&lt;container memento=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; standalone=&amp;quot;no&amp;quot;?&amp;gt;&amp;#10;&amp;lt;directory nest=&amp;quot;true&amp;quot; path=&amp;quot;/Users/rbackhouse/dev/zazl/workspace/org.dojotoolkit.zazl.servlet/src&amp;quot;/&amp;gt;&amp;#10;&quot; typeId=&quot;org.eclipse.debug.core.containerType.directory&quot;/&gt;&#10;&lt;container memento=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; standalone=&amp;quot;no&amp;quot;?&amp;gt;&amp;#10;&amp;lt;default/&amp;gt;&amp;#10;&quot; typeId=&quot;org.eclipse.debug.core.containerType.default&quot;/&gt;&#10;&lt;/sourceContainers&gt;&#10;&lt;/sourceLookupDirector&gt;&#10;"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -console"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Declipse.ignoreApp=true -Dosgi.noShutdown=true -Djava.util.logging.config.file=${workspace_loc}/org.potpie.musicserver.webapp/logging.properties -Dorg.osgi.service.http.port=8080 -Droot= -DstorageDir= -DV8=false -DjavaChecksum=true -DcompressorType=none -DsearchBundleIds=org.dojotoolkit.dojo,org.dojotoolkit.compressor.uglifyjs,org.json,org.uglifyjs,org.dojotoolkit.server.util.js,org.dojotoolkit.optimizer.amd,org.potpie.musicserver.web -DjsHandlerType=amdlite"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Declipse.ignoreApp=true -Dosgi.noShutdown=true -Djava.util.logging.config.file=${workspace_loc}/org.potpie.musicserver.webapp/logging.properties -Dorg.osgi.service.http.port=8080 -Droot= -DstorageDir= -DV8=false -DjavaChecksum=true -DcompressorType=none -DsearchBundleIds=org.dojotoolkit.dojo,org.dojotoolkit.compressor.uglifyjs,org.json,org.uglifyjs,org.dojotoolkit.server.util.js,org.dojotoolkit.optimizer.amd,org.dojotoolkit.optimizer.servlet,org.potpie.musicserver.web -DjsHandlerType=amdlite"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <setAttribute key="selected_features">
 <setEntry value="org.dojotoolkit.compressor.feature:default"/>
