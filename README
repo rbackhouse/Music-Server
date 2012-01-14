@@ -24,7 +24,7 @@ Download the musicserver.war file from the downloads page
 Copy the WAR file to your WebContainer webapps directory (or however the WebContainer expects it 
 to be deployed).
 
-Start up the WebContainer and access the desktop User Interface via http://hostname:port/musicserver/desktop.jsp
+Start up the WebContainer and access the desktop User Interface via http://hostname:port/musicserver/desktop.html
 
 First Time configuration :
 
@@ -38,8 +38,8 @@ If using Jetty you will need to ensure that a work directory is created in the J
 This will ensure the configuration file is saved between server restarts
 
 Other URLs:
-2) http://hostname:port/musicserver/mobile.jsp for the mobile (iOS or android) remote control
-3) http://hostname:port/musicserver/stream.jsp for the iOS/android streamer
+2) http://hostname:port/musicserver/mobile.html for the mobile (iOS or android) remote control
+3) http://hostname:port/musicserver/stream.html for the iOS/android streamer
 
 
 Known Issues
