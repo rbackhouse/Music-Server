@@ -2,36 +2,29 @@
 	"bootstrapModules" : ["loader/amd/amdlite.js"],
 	"debugBootstrapModules" : ["loader/amd/amdlite.js"],
 	"amdconfig" : {
-        "packages": [
-            {
-                "name": "dojo",
-                "location": "dojo",
-                "main": "main"
-            },
-            {
-                "name": "dijit",
-                "location": "dijit",
-                "main": "main"
-            },
-            {
-                "name": "dojox",
-                "location": "dojox",
-                "main": "main"
-            }
-        ],
         "plugins" : {
-        	"dojo/has" : "optimizer/amd/plugins/dojo/has",
-        	"dojo/text" : "optimizer/amd/plugins/dojo/text",
-        	"dojo/selector/_loader" : "optimizer/amd/plugins/dojo/selector/_loader",
-        	"dojox/gfx/renderer" : "optimizer/amd/plugins/dojox/gfx/renderer"
+        	"dojo/has" : {
+        		"proxy": "optimizer/amd/plugins/dojo/has",
+				"has" : {
+					"host-browser" : 1,
+					"dom" : 1,
+					"dojo-dom-ready-api" : 1,
+					"dojo-sniff" : 1 
+				}
+        	},
+        	"dojo/text" : {
+        		"proxy": "optimizer/amd/plugins/dojo/text"
+        	},
+        	"dojo/selector/_loader" : {
+        		"proxy": "optimizer/amd/plugins/dojo/selector/_loader", 
+        		"defval": "dojo/selector/lite"
+        	},
+        	"dojox/gfx/renderer" : {
+        		"proxy": "optimizer/amd/plugins/dojox/gfx/renderer", 
+        		"defval": "dojox/gfx/svg"
+        	}
         },
-		"i18nPluginId" : "dojo/i18n",
-		"has" : {
-			"host-browser" : 1,
-			"dom" : 1,
-			"dojo-dom-ready-api" : 1,
-			"dojo-sniff" : 1 
-		}
+		"i18nPluginId" : "dojo/i18n"
     },
 	"type" : "amd"
 }
