@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<context-param>
 		<param-name>jsHandlerType</param-name>
-		<param-value>amdlite</param-value>
+		<param-value>zazl</param-value>
 	</context-param>
 	<context-param>
 	    <param-name>compressJS</param-name>

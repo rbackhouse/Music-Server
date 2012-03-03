@@ -1,4 +1,4 @@
-amdlite({
+zazl({
     packages: [
         {
             name: 'dojo',

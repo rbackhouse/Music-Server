@@ -1,6 +1,6 @@
 {
-	"bootstrapModules" : ["loader/amd/amdlite.js"],
-	"debugBootstrapModules" : ["loader/amd/amdlite.js"],
+	"bootstrapModules" : ["loader/amd/zazl.js"],
+	"debugBootstrapModules" : ["loader/amd/zazl.js"],
 	"amdconfig" : {
         "plugins" : {
         	"dojo/has" : {

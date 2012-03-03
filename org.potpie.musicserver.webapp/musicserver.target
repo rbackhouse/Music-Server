@@ -9,5 +9,6 @@
 <location path="${workspace_loc}/../targetplatform/zazl/eclipse" type="Directory"/>
 <location path="${workspace_loc}/../targetplatform/jsp" type="Directory"/>
 <location path="${workspace_loc}/../targetplatform/nekohtml" type="Directory"/>
+<location path="${workspace_loc}/../targetplatform/jquery" type="Directory"/>
 </locations>
 </target>
