@@ -12,6 +12,10 @@
 		value="${workspace.dir}/../targetplatform/zazl/eclipse/plugins"/>
 	
 	<property
+		name="zazljs.path"
+		value="${workspace.dir}/../targetplatform/zazl/loader/amd"/>
+	
+	<property
 		name="soundapi.dir"
 		value="${workspace.dir}/../targetplatform/soundapi/eclipse/plugins"/>
 	
@@ -39,6 +43,9 @@
 			<zipfileset dir="${dojo.dir}/dojo" prefix="dojo"/>
 			<zipfileset dir="${dojo.dir}/dijit" prefix="dijit"/>
 			<zipfileset dir="${dojo.dir}/dojox" prefix="dojox"/>
+			<zipfileset dir="${zazljs.path}" prefix="loader/amd">
+				<include name="zazl.js"/>
+			</zipfileset>
 			<fileset dir="${workspace.dir}/org.potpie.musicserver.web/" includes="**/*.js,**/*.jsp,**/*.html"/>
 			<lib dir="${soundapi.dir}/javazoom.jl_1.0.1">
 				<include name="jl1.0.1.jar"/>

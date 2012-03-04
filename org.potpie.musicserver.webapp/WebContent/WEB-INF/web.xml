@@ -29,10 +29,6 @@
         <servlet-class>org.potpie.musicserver.service.MusicServerServlet</servlet-class>
         <load-on-startup>3</load-on-startup>
     </servlet>
-	<filter>
-	   <filter-name>JSFilter</filter-name>
-	   <filter-class>org.dojotoolkit.optimizer.servlet.JSFilter</filter-class>
-	</filter>
     <servlet-mapping>
         <servlet-name>MusicServerServlet</servlet-name>
         <url-pattern>/service/*</url-pattern>
@@ -41,10 +37,6 @@
         <servlet-name>JSServlet</servlet-name>
         <url-pattern>/_javascript/*</url-pattern>
     </servlet-mapping>
-	<filter-mapping>
-	   <filter-name>JSFilter</filter-name>
-	   <url-pattern>*.html</url-pattern>
-	</filter-mapping>
 	<listener>
 		<listener-class>org.potpie.musicserver.service.SessionListener</listener-class>
 	</listener>

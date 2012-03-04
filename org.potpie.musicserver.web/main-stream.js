@@ -1,4 +1,11 @@
+var dojoConfig = {
+    has:{
+        "dojo-1x-base":1
+    }
+};
+
 zazl({
+	directInject: true,
     packages: [
         {
             name: 'dojo',
