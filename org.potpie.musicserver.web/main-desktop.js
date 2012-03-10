@@ -24,7 +24,8 @@ zazl({
         }
     ]
 }, 
-["app/desktop"], 
-function(musicserver) {
+["app/desktop", 'dojo/dom', 'dojo/dom-style'],
+function(musicserver, dom, domStyle) {
+	domStyle.set(dom.byId("borderContainer"), "visibility", "visible");
     console.log("musicserver loaded");
 });
