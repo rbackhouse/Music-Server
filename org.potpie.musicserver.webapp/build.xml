@@ -40,9 +40,25 @@
 			<zipfileset dir="${workspace.dir}/org.potpie.musicserver.web/images" prefix="images"/>
 			<zipfileset dir="${workspace.dir}/org.potpie.musicserver.web/css" prefix="css"/>
 			<zipfileset dir="${workspace.dir}/org.potpie.musicserver.webapp/WebContent/WEB-INF/classes" prefix="WEB-INF/classes"/>
-			<zipfileset dir="${dojo.dir}/dojo" prefix="dojo"/>
-			<zipfileset dir="${dojo.dir}/dijit" prefix="dijit"/>
-			<zipfileset dir="${dojo.dir}/dojox" prefix="dojox"/>
+			<zipfileset dir="${dojo.dir}/dojo" prefix="dojo">
+				<exclude name="**/tests/**"/>
+				<exclude name="**/demos**"/>
+			</zipfileset>
+			<zipfileset dir="${dojo.dir}/dijit" prefix="dijit">
+				<exclude name="**/tests/**"/>
+				<exclude name="**/demos**"/>
+			</zipfileset>
+			<zipfileset dir="${dojo.dir}/dojox" prefix="dojox">
+				<exclude name="**/tests/**"/>
+				<exclude name="**/demos**"/>
+				<include name="**/mobile/**"/>
+				<include name="**/mobile.js"/>
+				<include name="**/grid/**"/>
+				<include name="**/html/**"/>
+				<include name="**/html.js"/>
+				<include name="**/main.js"/>
+			</zipfileset>
+
 			<zipfileset dir="${zazljs.path}" prefix="loader/amd">
 				<include name="zazl.js"/>
 			</zipfileset>
