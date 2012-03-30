@@ -56,6 +56,8 @@
 				<include name="**/grid/**"/>
 				<include name="**/html/**"/>
 				<include name="**/html.js"/>
+				<include name="**/fx/**"/>
+				<include name="**/fx.js"/>
 				<include name="**/main.js"/>
 			</zipfileset>
 
@@ -80,6 +82,8 @@
 			</lib>
 			<lib dir="${targetplatform.dir}">
 				<include name="*.jar"/>
+				<exclude name="org.dojotoolkit.compressor.uglifyjs.v8*.jar"/>
+				<exclude name="*v8*.jar"/>
 				<exclude name="*.source_*.jar"/>
 			</lib>
 			<lib dir="${export.dir}">
