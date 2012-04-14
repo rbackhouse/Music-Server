@@ -1,30 +1,9 @@
-var dojoConfig = {
-    has:{
-        "dojo-1x-base":1
-    }
+var zazlConfig = {
+	directInject: true,
+	packages: [{name: 'dojo'},{name: 'dijit'},{name: 'dojox'}]
 };
 
-zazl({
-	directInject: true,
-    packages: [
-        {
-            name: 'dojo',
-            location: 'dojo',
-            main:'main'
-        },
-        {
-            name: 'dijit',
-            location: 'dijit',
-            main:'main'
-        },
-        {
-            name: 'dojox',
-            location: 'dojox',
-            main:'main'
-        }
-    ]
-}, 
-["app/mobile"], 
+require(["app/mobile"], 
 function(musicserver) {
     console.log("musicserver loaded");
 });

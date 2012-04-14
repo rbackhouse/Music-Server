@@ -1,30 +1,9 @@
-var dojoConfig = {
-    has:{
-        "dojo-1x-base":1
-    }
+var zazlConfig = {
+	directInject: true,
+	packages: [{name: 'dojo'},{name: 'dijit'},{name: 'dojox'}]
 };
 
-zazl({
-	directInject: true,
-    packages: [
-        {
-            name: 'dojo',
-            location: 'dojo',
-            main:'main'
-        },
-        {
-            name: 'dijit',
-            location: 'dijit',
-            main:'main'
-        },
-        {
-            name: 'dojox',
-            location: 'dojox',
-            main:'main'
-        }
-    ]
-}, 
-["app/desktop", 'dojo/dom', 'dojo/dom-style'],
+require(["app/desktop", 'dojo/dom', 'dojo/dom-style'],
 function(musicserver, dom, domStyle) {
 	domStyle.set(dom.byId("borderContainer"), "visibility", "visible");
     console.log("musicserver loaded");
