@@ -57,11 +57,11 @@ define(['dijit/registry',
 				currentlyPlaying.appendChild(document.createTextNode("Music Server - Currently Playing ["+response.currentlyPlaying+"] ["+response.currentPosition+"]"));
 				if (!storesInitialized) {
 					storesInitialized = true;
-					playListStore = new ItemFileWriteStore({url: "./service/playList"});
+					playListStore = new ItemFileWriteStore({url: servicehandler.getContextRoot()+"/service/playList"});
 					playList.setStore(playListStore);
-					artistsStore = new ItemFileWriteStore({url: "./service/artist"});
+					artistsStore = new ItemFileWriteStore({url: servicehandler.getContextRoot()+"/service/artist"});
 					artists.setStore(artistsStore);
-					albumsStore = new ItemFileWriteStore({url: "./service/album"});
+					albumsStore = new ItemFileWriteStore({url: servicehandler.getContextRoot()+"/service/album"});
 					albums.setStore(albumsStore);
 				}
 				setPlayPauseIcon();
@@ -134,7 +134,7 @@ define(['dijit/registry',
 	};
 	
 	var playListResult = function(response) {
-		playListStore = new ItemFileWriteStore({url: "./service/playList"});
+		playListStore = new ItemFileWriteStore({url: servicehandler.getContextRoot()+"/service/playList"});
 		playList.setStore(playListStore);
 		tabContainer.selectChild(registry.byId("playListContainer"));
 	};
@@ -228,12 +228,12 @@ define(['dijit/registry',
 	
 	var resetAlbums = function(e) {
 		dojo.stopEvent(e);
-		albumsStore = new dojo.data.ItemFileReadStore({url: "./service/album"});
+		albumsStore = new dojo.data.ItemFileReadStore({url: servicehandler.getContextRoot()+"/service/album"});
 		albums.setStore(albumsStore, null, null);
 	};
 	
 	var updatePlayList = function() {
-		playListStore = new ItemFileWriteStore({url: "./service/playList"});
+		playListStore = new ItemFileWriteStore({url: servicehandler.getContextRoot()+"/service/playList"});
 		playList.setStore(playListStore);
 	};
 	

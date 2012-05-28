@@ -1,6 +1,17 @@
 define(['dojo/_base/xhr', 'dojo/_base/sniff', 'dojo/json'], function(xhr, has, json) {
 	var _contextRoot = ".";
+	if (typeof MusicServerContextRoot !== 'undefined') {
+		_contextRoot = MusicServerContextRoot;
+	}
 	ServiceHandler = {
+		setContextRoot : function(contextRoot) {
+			_contextRoot = contextRoot;
+		},
+
+		getContextRoot: function() {
+			return _contextRoot;
+		},
+
 		getArtists: function() {
 			var url = _contextRoot+ "/service/artist/";
 			return this._invokeService(url, arguments);
