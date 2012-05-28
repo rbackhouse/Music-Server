@@ -10,5 +10,6 @@
 <location path="${workspace_loc}/../targetplatform/jsp" type="Directory"/>
 <location path="${workspace_loc}/../targetplatform/nekohtml" type="Directory"/>
 <location path="${workspace_loc}/../targetplatform/jquery" type="Directory"/>
+<location path="${workspace_loc}/../targetplatform/dgrid" type="Directory"/>
 </locations>
 </target>
