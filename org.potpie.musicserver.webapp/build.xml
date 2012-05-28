@@ -32,6 +32,10 @@
 		value="${workspace.dir}/../targetplatform/nekohtml/plugins/org.cyberneko.html_1.9.15"/>
 	
 	<property
+		name="dgrid.dir"
+		value="${workspace.dir}/../targetplatform/dgrid/plugins/org.dgrid_1.0.0"/>
+	
+	<property
 		name="export.dir"
 		value="${target.dir}/plugins"/>
 	
@@ -60,7 +64,16 @@
 				<include name="**/fx.js"/>
 				<include name="**/main.js"/>
 			</zipfileset>
-
+			<zipfileset dir="${dgrid.dir}/dgrid" prefix="dgrid">
+				<exclude name="**/test/**"/>
+				<exclude name="**/demos**"/>
+			</zipfileset>
+			<zipfileset dir="${dgrid.dir}/put-selector" prefix="put-selector">
+				<exclude name="**/test/**"/>
+			</zipfileset>
+			<zipfileset dir="${dgrid.dir}/xstyle" prefix="xstyle">
+				<exclude name="**/test/**"/>
+			</zipfileset>
 			<zipfileset dir="${zazljs.path}" prefix="loader/amd">
 				<include name="zazl.js"/>
 			</zipfileset>
