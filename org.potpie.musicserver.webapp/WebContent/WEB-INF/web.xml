@@ -29,6 +29,16 @@
         <servlet-class>org.potpie.musicserver.service.MusicServerServlet</servlet-class>
         <load-on-startup>3</load-on-startup>
     </servlet>
+    <servlet>
+        <description/>
+        <display-name>LsJsServlet</display-name>
+        <servlet-name>LsJsServlet</servlet-name>
+        <servlet-class>org.dojotoolkit.lsjs.LsJsServlet</servlet-class>
+    </servlet>
+	<filter>
+	   <filter-name>CORSFilter</filter-name>
+	   <filter-class>org.dojotoolkit.lsjs.CORSFilter</filter-class>
+	</filter>
     <servlet-mapping>
         <servlet-name>MusicServerServlet</servlet-name>
         <url-pattern>/service/*</url-pattern>
@@ -37,7 +47,15 @@
         <servlet-name>JSServlet</servlet-name>
         <url-pattern>/_javascript/*</url-pattern>
     </servlet-mapping>
-	<listener>
+    <servlet-mapping>
+        <servlet-name>LsJsServlet</servlet-name>
+        <url-pattern>/checktimestamps/*</url-pattern>
+    </servlet-mapping>
+	<filter-mapping>
+	   <filter-name>CORSFilter</filter-name>
+	   <url-pattern>/*</url-pattern>
+	</filter-mapping>
+    <listener>
 		<listener-class>org.potpie.musicserver.service.SessionListener</listener-class>
 	</listener>
 </web-app>
