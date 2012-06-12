@@ -34,11 +34,19 @@
 	<property
 		name="dgrid.dir"
 		value="${workspace.dir}/../targetplatform/dgrid/plugins/org.dgrid_1.0.0"/>
-	
+
+	<property
+		name="jquery.dir"
+		value="${workspace.dir}/../targetplatform/jquery/plugins/com.jquery_1.7.1"/>
+
+	<property
+		name="jquery.mobile.dir"
+		value="${workspace.dir}/../targetplatform/jquery/plugins/com.jquery.mobile_1.1"/>
+
 	<property
 		name="export.dir"
 		value="${target.dir}/plugins"/>
-	
+
 	<target name="assemble">
 		<war destfile="${target.dir}/musicserver.war" webxml="${basedir}/WebContent/WEB-INF/web.xml">
 			<zipfileset dir="${workspace.dir}/org.potpie.musicserver.web/images" prefix="images"/>
@@ -73,6 +81,12 @@
 			</zipfileset>
 			<zipfileset dir="${dgrid.dir}/xstyle" prefix="xstyle">
 				<exclude name="**/test/**"/>
+			</zipfileset>
+			<zipfileset dir="${jquery.dir}">
+				<exclude name="META-INF/**"/>
+			</zipfileset>
+			<zipfileset dir="${jquery.mobile.dir}">
+				<exclude name="META-INF/**"/>
 			</zipfileset>
 			<zipfileset dir="${zazljs.path}" prefix="loader/amd">
 				<include name="zazl.js"/>
