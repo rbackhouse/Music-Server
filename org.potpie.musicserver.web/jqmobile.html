@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Music Server</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="css/jquery-mobile/jquery.mobile.css" />
+    <link rel="stylesheet" href="css/jqrc.css"/>
+	<script type="text/javascript" src="loader/amd/zazl.js"></script>
+    <script type="text/javascript">
+    	zazl({ 
+    		directInject: true,
+    		paths : { 
+    			jquery: "lib/jquery/jquery-1.7.1", 
+    			jquerymobile: "lib/jquery-mobile/jquery.mobile" 
+    		}
+    	}, 
+    	["jquery", "jquerymobile", "app/jqmobile"], 
+    	function($) {
+    	});
+    </script>
+</head>
+<body>
+	<div data-role="page" id="artists">
+		<div data-role="header" data-position="fixed">
+			<h1>Artists</h1>
+		</div>
+		<div data-role="content">
+			<ul id="artistList" data-role="listview" data-theme="g" data-filter="true">
+			</ul>
+		</div>
+		<div data-id="thefooter "data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#artists">Artists</a></li>
+					<li><a href="#albums">Albums</a></li>
+					<li><a href="#songs">Songs</a></li>
+					<li><a href="#playlist">Playing</a></li>
+				</ul>
+			</div>		
+		</div>		
+	</div>
+	<div data-role="page" id="albums">
+		<div data-role="header" data-position="fixed">
+			<h1>Albums</h1> 
+		</div>
+		<a href="#" id="randomForArtistButton" data-role="button" data-inline="true">Mix</a> 
+		<div data-role="content">
+			<ul id="albumList" data-role="listview" data-theme="g">
+			</ul>
+		</div>
+		<div data-id="thefooter "data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#artists">Artists</a></li>
+					<li><a href="#albums">Albums</a></li>
+					<li><a href="#songs">Songs</a></li>
+					<li><a href="#playlist">Playing</a></li>
+				</ul>
+			</div>		
+		</div>		
+	</div>
+	<div data-role="page" id="songs">
+		<div data-role="header" data-position="fixed">
+			<h1>Songs</h1> 
+		</div>
+		<a href="#" id="addAllButton" data-role="button" data-inline="true">Add All</a> 
+		<div data-role="content">
+			<ul id="songList" data-role="listview" data-theme="g">
+			</ul>
+		</div>
+		<div data-id="thefooter "data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#artists">Artists</a></li>
+					<li><a href="#albums">Albums</a></li>
+					<li><a href="#songs">Songs</a></li>
+					<li><a href="#playlist">Playing</a></li>
+				</ul>
+			</div>		
+		</div>		
+	</div>
+	<div data-role="page" id="playlist">
+		<div data-role="header" data-position="fixed" class="ui-bar">
+			<h1>Playing</h1>
+		</div>
+		<div data-role="content">
+			<div data-role="collapsible-set">
+				<div data-role="collapsible" data-collapsed="false">
+					<h3>Play List</h3>
+					<div data-role="controlgroup" data-type="horizontal">
+						<div> 
+							<a href="#" id="randomButton" data-role="button" data-inline="true">Random</a>
+							<a href="#" id="clearButton" data-role="button" data-inline="true">Clear</a> 
+						</div>
+					</div>	 
+					<div> 
+						<ol id="playingList" data-role="listview" data-theme="g">
+						</ol>
+					</div>	
+				</div>
+				<div data-role="collapsible">
+					<h3>Play/Pause/Stop/Volume</h3> 
+					<div data-role="controlgroup" data-type="horizontal">
+						<a href="#" id="previous" data-role="button" data-icon="rewindIcon" data-iconpos="notext" data-inline="true"></a> 
+						<a href="#" id="playPause" data-role="button" data-icon="playIcon" data-iconpos="notext" data-inline="true"></a> 
+						<a href="#" id="stop" data-role="button" data-icon="stopIcon" data-iconpos="notext" data-inline="true"></a> 
+						<a href="#" id="next" data-role="button" data-icon="fastForwardIcon" data-iconpos="notext" data-inline="true"></a>
+					</div>	
+					<input type="range" name="slider" id="volume" value="5" min="1" max="10"></input>					 
+				</div>			
+			</div>				
+		</div>
+		<div data-id="thefooter "data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#artists">Artists</a></li>
+					<li><a href="#albums">Albums</a></li>
+					<li><a href="#songs">Songs</a></li>
+					<li><a href="#playlist">Playing</a></li>
+				</ul>
+			</div>		
+		</div>		
+	</div>
+</body>
+</html>
