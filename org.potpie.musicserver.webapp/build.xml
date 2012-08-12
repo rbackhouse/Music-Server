@@ -25,7 +25,7 @@
 	
 	<property
 		name="dojo.dir"
-		value="${workspace.dir}/../targetplatform/dojo/plugins/org.dojotoolkit.dojo_1.7.1"/>
+		value="${workspace.dir}/../targetplatform/dojo/plugins/org.dojotoolkit.dojo_1.8.0"/>
 	
 	<property
 		name="nekohtml.dir"

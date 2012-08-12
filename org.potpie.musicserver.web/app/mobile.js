@@ -212,7 +212,7 @@ define(['dijit/registry',
 	};
 	
 	var songClicked = function(e) {
-		var songItemNode = e.currentTarget.parentNode;
+		var songItemNode = e.target.parentNode;
 		var songOffset = songItemNode.attributes.getNamedItem("songOffset");
 		var songLength = songItemNode.attributes.getNamedItem("songLength");
 		var dfd = servicehandler.addToPlayList([{offset : parseInt(songOffset.value), length : parseInt(songLength.value)}]);
@@ -259,7 +259,7 @@ define(['dijit/registry',
 	};
 	
 	var getArtistsForTab = function(e) {
-		var tab = e.currentTarget.offsetParent;
+		var tab = e.target.offsetParent;
 		var listId = tab.attributes.getNamedItem("listId").value;
 		var startIndex = parseInt(tab.attributes.getNamedItem("startIndex").value);
 		var	endIndex = parseInt(tab.attributes.getNamedItem("endIndex").value);

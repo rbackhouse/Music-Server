@@ -3,7 +3,8 @@
 <setAttribute key="additional_plugins">
 <setEntry value="org.apache.commons.el:1.0.0.v201004212143:default:true"/>
 <setEntry value="org.apache.jasper:5.5.17.v201004212143:default:true"/>
-<setEntry value="org.dojotoolkit.dojo:1.7.1:default:true"/>
+<setEntry value="org.dojotoolkit.dojo:1.7.1:default:false"/>
+<setEntry value="org.dojotoolkit.dojo:1.8.0:default:true"/>
 <setEntry value="org.eclipse.equinox.http.jetty:2.0.100.v20110502:default:true"/>
 <setEntry value="org.eclipse.equinox.http.registry:1.1.100.v20110502:default:true"/>
 <setEntry value="org.eclipse.equinox.http.servlet:1.1.200.v20110502:default:true"/>
