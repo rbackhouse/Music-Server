@@ -24,7 +24,9 @@
         		"defval": "dojox/gfx/svg"
         	}
         },
-		"i18nPluginId" : "dojo/i18n"
+		"i18nPluginId" : "dojo/i18n",
+		"astparser": "uglifyjs"
     },
-	"type" : "amd"
+	"type" : "amd",
+	"astCache" : false
 }
